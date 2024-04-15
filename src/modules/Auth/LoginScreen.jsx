@@ -59,8 +59,11 @@ function LoginScreen() {
       if(res.data?.status == 200) {
         const {token, user} = res.data?.data 
         const {business} = res.data.data.business
-        
+        //  console.log("response", res.data.data.business)
         authCtx.login(token, user, location.state?.from,business)
+        const business_id = res.data.data.business._id;
+        console.log(business_id)
+        localStorage.setItem("Business ID", business_id);
       } else {
         throw new Error(res.data?.message ?? "Error logging you in! Please try again")
       }

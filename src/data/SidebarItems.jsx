@@ -58,7 +58,7 @@ const SidebarItems = [
   },
   {
     id: 8,
-    title: "Settings",
+    title: "Profile Settings",
     icon: <IoSettingsOutline color={"#AFAFAF"} size={"24px"} />,
     activeIcon: <IoSettingsOutline color={"#24ACE3"} size={"24px"} />,
     route: "/settings",

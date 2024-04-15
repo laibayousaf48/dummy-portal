@@ -22,7 +22,7 @@ import OffersRequestsScreen from './modules/OffersRequests/OffersRequestsScreen.
 import JobsScreen from './modules/Jobs/JobsScreen.jsx';
 import MessagesScreen from './modules/Messages/MessagesScreen.jsx';
 import HelpScreen from './modules/Help/HelpScreen.jsx';
-import SettingsScreen from './modules/Settings/SettingsScreen.jsx';
+import ProfileSettingsScreen from './modules/ProfileSettings/ProfileSettingsScreen.jsx';
 import PrivateRouteWrapper from './components/PrivateRouteWrapper';
 import PublicRouteWrapper from './components/PublicRouteWrapper.jsx';
 import ChannelsScreen from './modules/Channels/ChannelsScreen';
@@ -30,15 +30,17 @@ import GrowthScreen from './modules/Growth/GrowthScreen';
 import IntegrationsScreen from './modules/Integrations/IntegrationsScreen';
 import BillingsScreen from './modules/Billing/BillingsScreen';
 import DemographicsScreen from './modules/Demographics/DemographicsScreen';
+import OTP from './modules/Auth/OTP.jsx';
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <BrowserRouter>
       <AuthContextProvider>
         <Routes>
+            <Route path="/otp" element={<OTP />} />
+            <Route path="/verify/:number" element={<VerifyScreen />} />
           <Route element={<PublicRouteWrapper />}>
             <Route path="/login" element={<LoginScreen />} />
-            <Route path="/verify/:number" element={<VerifyScreen />} />
             <Route path="/signup" element={<SignupScreen />} />
           </Route>
 
@@ -55,7 +57,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
             {/* <Route path="/messages" element={<MessagesScreen />} /> */}
             <Route path="/help" element={<HelpScreen />} />
             <Route path="/channels" element={<ChannelsScreen />} />
-            <Route path="/settings" element={<SettingsScreen />} />
+            <Route path="/settings" element={<ProfileSettingsScreen />} />
           </Route>
 
           <Route

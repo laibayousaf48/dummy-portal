@@ -272,24 +272,97 @@ function OffersRequestsScreen() {
                 "border-0 bg-transparent cursor-pointer outline-none py-2 px-2 text-slate-500"
               }
             >
-              FEATURED
+              ACTIVE
             </Tab>
             <Tab
               className={
                 "border-0 bg-transparent cursor-pointer outline-none py-2 px-2 text-slate-500"
               }
             >
-              REQUESTS
+              DRAFT
             </Tab>
             <Tab
               className={
                 "border-0 bg-transparent cursor-pointer outline-none py-2 px-2 text-slate-500"
               }
             >
-              OFFERS
+              EXPIRED
             </Tab>
           </TabList>
+
           <TabPanel>
+            <div> <div className="container px-5 py-12 mx-auto flex flex-wrap">
+<div className="flex flex-wrap -m-4 mt-1 w-5/6">
+    <div className="p-4 lg:w-full md:w-full sm:justify-center">
+      <div className="flex border border-gray-400  sm:flex-row flex-col">
+        {/* <div class=" sm:mr-8 sm:mb-0 mb-4 inline-flex items-center justify-center  bg-indigo-100 text-indigo-500 flex-shrink-0"> */}
+        <div className='flex-[1_1_25%] flex-grow inline-flex items-center justify-center p-2'>
+          <img src="src/assets/images/img.jpg" alt="Image" className='block mx-auto object-contain p-2' />
+        </div>
+        <div className="flex-[1_1_50%] flex-grow sm:justify-center p-2">
+          <h2 className="text-gray-900 text-lg title-font font-medium mb-1 mt-3 text-left">Get 20% Discount</h2>
+          <p className="leading-relaxed text-base text-left mb-4">Do you provide your services in Essex?</p>
+          <p className="leading-relaxed text-base text-left">Please share your requirements</p>
+        </div>
+        <div className="flex-[1_1_25%] flex-grow border-l border-gray-400 bg-gray-100 pl-4 pr-4 pb-4 pt-1">
+        <div className="flex-grow flex flex-col ">
+          
+            <table className="border-collapse w-full">
+            <tr> 
+              <td className="pl-2 pr-2 pb-2 pt-0 text-left text-lg">Reach</td>
+              <td className="pl-2 pr-2 pb-2 pt-0 text-left text-lg">Views</td>
+            </tr>
+            <tr>
+              <td className="p-2 font-normal text-3xl text-left">2.8K</td>
+              <td className="p-2 font-normal text-3xl text-left">1.5K</td>
+            </tr>
+            <tr>
+              <td className="p-2 text-left text-lg"><strong className='font-normal text-3xl'>19 </strong><br /> Calls</td>
+              <td className="p-2 text-left text-lg"><strong className=' font-normal text-3xl'>1,634 </strong><br />Distance(m)</td>
+            </tr>
+          </table>
+          
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div className="flex flex-wrap -m-4 mt-1 w-5/6">
+    <div className="p-4 lg:w-full md:w-full sm:justify-center">
+      <div className="flex border border-gray-400  sm:flex-row flex-col">
+        <div className='flex-[1_1_25%] flex-grow inline-flex items-center justify-center p-2'>
+          <img src="src/assets/images/img.jpg" alt="Image" className='block mx-auto object-contain p-2' />
+        </div>
+        <div className="flex-[1_1_50%] flex-grow sm:justify-center p-2">
+          <h2 className="text-gray-900 text-lg title-font font-medium mb-1 mt-3 text-left">Get 20% Discount</h2>
+          <p className="leading-relaxed text-base text-left mb-4">Do you provide your services in Essex?</p>
+          <p className="leading-relaxed text-base text-left">Please share your requirements</p>
+        </div>
+        <div className="flex-[1_1_25%] flex-grow border-l border-gray-400 bg-gray-100 pl-4 pr-4 pb-4 pt-1">
+        <div className="flex-grow flex flex-col ">
+          
+            <table className="border-collapse w-full">
+            <tr> 
+              <td className="pl-2 pr-2 pb-2 pt-0 text-left text-lg">Reach</td>
+              <td className="pl-2 pr-2 pb-2 pt-0 text-left text-lg">Views</td>
+            </tr>
+            <tr>
+              <td className="p-2 font-normal text-3xl text-left">2.8K</td>
+              <td className="p-2 font-normal text-3xl text-left">1.5K</td>
+            </tr>
+            <tr>
+              <td className="p-2 text-left text-lg"><strong className='font-normal text-3xl'>19 </strong><br /> Calls</td>
+              <td className="p-2 text-left text-lg"><strong className=' font-normal text-3xl'>1,634 </strong><br />Distance(m)</td>
+            </tr>
+          </table>
+          
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div></div>
             <div className="flex flex-col items-center justify-center h-full">
               <div className="mt-3">
                 <img src={AppImages.postImage} alt="" />
