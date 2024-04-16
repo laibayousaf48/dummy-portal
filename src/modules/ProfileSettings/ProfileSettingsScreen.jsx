@@ -135,6 +135,9 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import TextInputField from "../../components/basic/TextInputField";
 import AppImages from "../../assets/images";
+import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer, toast } from 'react-toastify';
+import firebase_service from "../../utils/firebase_service.js";
 
 function ProfileSettingsScreen() {
   const [selectedImage, setSelectedImage] = useState("");
@@ -204,46 +207,88 @@ function ProfileSettingsScreen() {
   //   fileInput.click();
   // };
   
+  // const handleIconClick = () => {
+  //   const fileInput = document.createElement('input');
+  //   fileInput.type = 'file';
+  //   fileInput.accept = 'image/*'; 
+  //   fileInput.onchange = async (e) => {
+  //     const file = e.target.files[0];
+  //     console.log('Selected file:', file);
+  //     setSelectedImage(URL.createObjectURL(file)); 
+  //     const url = URL.createObjectURL(file);
+  //     console.log('Selected image URL:', url); 
+  //     const fd = new FormData();
+  //     fd.append('avatar_url', url); 
+  
+  //     try {
+  //       const response = await fetch('https://crm-lara-mongo-7azts5zmra-uc.a.run.app/businessportal/business-profile?business_id=6604a786bc60ff8cf57c1f5d', {
+  //         method: 'POST',
+  //         body: fd
+  //       });
+  //       const data = await response.json();
+  //       console.log('API image update:', data.message);
+  //       setFormErrors({
+  //         email: "",
+  //         password: null,
+  //         cpassword: null,
+  //         business_name: "",
+  //         business_phone: "",
+  //         api: null,
+  //       });
+  //       setError(null);
+  //     } catch (error) {
+  //       console.error('API error:', error);
+  //       setFormErrors((old) => ({ ...old, api: 'Failed to send data to the server.' }));
+  //       setError('Failed to send data to the server.');
+  //     }
+  //   };
+  //   fileInput.click();
+  // };
   const handleIconClick = () => {
     const fileInput = document.createElement('input');
     fileInput.type = 'file';
     fileInput.accept = 'image/*'; 
-    fileInput.onchange = async (e) => {
+    fileInput.onchange = (e) => {
       const file = e.target.files[0];
       console.log('Selected file:', file);
-      setSelectedImage(URL.createObjectURL(file)); // Display selected image
       const url = URL.createObjectURL(file);
-      console.log('Selected image URL:', url); // Log selected image URL
+      console.log('Selected image URL:', url); 
+      setSelectedImage(URL.createObjectURL(file)); // Display selected image
       const fd = new FormData();
-      // fd.append('business_name', formFields.business_name);
-      // fd.append('business_phone', formFields.business_phone);
-      // fd.append('email', formFields.email);
-      // fd.append('address', formFields.address);
-      // fd.append('category', formFields.category);
-      fd.append('avatar_url', url); 
+       
+      setBusinessInfo({...businessInfo, avatar_url: URL.createObjectURL(file)})
+      firebase_service.uploadFileOnFirebase({
+        file, 
+        filename: file.name
+      }).then(fileUrl => {
+        try {
+          fd.append('avatar_url', fileUrl);
+          const response = fetch('https://crm-lara-mongo-7azts5zmra-uc.a.run.app/businessportal/business-profile?business_id=6604a786bc60ff8cf57c1f5d', {
+            method: 'POST',
+            body: fd
+          });
+          // const data = response.json(); 
+          // console.log('API image update:', data.message);
+          console.log('API image update:', response.url);
+          toast.success("Image updated Successfully");
+        // setTimeout(function(){ location.reload(); }, 5000);
   
-      try {
-        const response = await fetch('https://crm-lara-mongo-7azts5zmra-uc.a.run.app/businessportal/business-profile?business_id=6604a786bc60ff8cf57c1f5d', {
-          method: 'POST',
-          body: fd
-        });
-        const data = await response.json();
-        console.log('API image update:', data.message);
-        setFormErrors({
-          email: "",
-          password: null,
-          cpassword: null,
-          business_name: "",
-          business_phone: "",
-          api: null,
-        });
-        setError(null);
-      } catch (error) {
-        console.error('API error:', error);
-        // Handle API error by setting appropriate form errors or error state
-        setFormErrors((old) => ({ ...old, api: 'Failed to send data to the server.' }));
-        setError('Failed to send data to the server.');
-      }
+          setFormErrors({
+            email: "",
+            password: null,
+            cpassword: null,
+            business_name: "",
+            business_phone: "",
+            api: null,
+          });
+          setError(null);
+        } catch (error) {
+          console.error('API error:', error);
+          setFormErrors((old) => ({ ...old, api: 'Failed to send data to the server.' }));
+          setError('Failed to send data to the server.');
+        }
+      })
+      
     };
     fileInput.click();
   };
@@ -265,7 +310,6 @@ function ProfileSettingsScreen() {
       }).then(res => res.json())
   
       console.log('API form update:', response);
-      // fetchData();
       setTimeout(function(){ location.reload(); }, 5000);
       setFormErrors({
         email: "",
@@ -292,24 +336,7 @@ function ProfileSettingsScreen() {
             <div class="lg:w-full mx-auto">
               <div class="flex flex-col sm:flex-row mt-10">
                 <div class="sm:w-1/3 text-center sm:pr-8 sm:py-8">
-                {/* <div className="w-20 h-20 rounded-full inline-flex items-center justify-center bg-gray-200 text-gray-400">
-                {selectedImage ? (
-                     <img src={selectedImage} alt="Selected" className="w-full h-full rounded-full object-cover" />
-                   ) : (
-                     <svg
-                       fill="none"
-                       stroke="currentColor"
-                       strokeLinecap="round"
-                       strokeLinejoin="round"
-                       strokeWidth="2"
-                       className="w-10 h-10"
-                       viewBox="0 0 24 24"
-                     >
-                       <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"></path>
-                       <circle cx="12" cy="7" r="4"></circle>
-                     </svg>
-                   )}
-               </div> */}
+
                <div className="w-20 h-20 rounded-full inline-flex items-center justify-center bg-gray-200 text-gray-400">
                  {businessInfo && businessInfo.avatar_url ? (
                    <img src={businessInfo.avatar_url} alt="Avatar" className="w-full h-full rounded-full object-cover" />
@@ -362,12 +389,6 @@ function ProfileSettingsScreen() {
             className="max-w-md mx-auto my-5 gap-2 py-[3%] h-[70vh] justify-center flex flex-col"
           >
             <div>
-              {/* <img
-                src={AppImages.onecall}
-                alt=""
-                className="w-[90px] h-[91px]"
-              /> */}
-
               <div className="text-[40px] text-[#333333] mt-[16px] justify-center text-center">
                 Update Profile
               </div>
@@ -503,6 +524,7 @@ function ProfileSettingsScreen() {
 
         </section>
       </div>
+      <ToastContainer />
     </DashboardTemplate>
   );
 }

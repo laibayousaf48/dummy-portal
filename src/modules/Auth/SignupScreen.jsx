@@ -3,7 +3,8 @@ import axios from 'axios';
 import { useParams, useNavigate } from "react-router-dom";
 import TextInputField from "../../components/basic/TextInputField";
 import AppImages from "../../assets/images";
-
+import 'react-toastify/dist/ReactToastify.css';
+// import { ToastContainer, toast } from 'react-toastify';
 
 function SignupScreen() {
   const navigate = useNavigate(); 
