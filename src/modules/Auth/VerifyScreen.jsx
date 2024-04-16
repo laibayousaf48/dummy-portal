@@ -3,10 +3,15 @@ import TextInputField from "../../components/basic/TextInputField";
 import AppImages from "../../assets/images";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from 'axios';
+import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer, toast } from 'react-toastify';
+
 
 function VerifyScreen() {
   const navigate = useNavigate(); 
   let { number } = useParams();
+  // const [emailSent, setEmailSent] = useState(false); // State to track if email is sent
+  // const [openSnackbar, setOpenSnackbar] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const images = [
     AppImages.img1,
@@ -57,30 +62,40 @@ function VerifyScreen() {
     
   // };
  const userEmail = localStorage.getItem('userEmail');
- const generateOTP = async()=>{
+ const generateOTP = async ()=>{
  const userEmail = localStorage.getItem('userEmail');
   const otp = Math.floor(1000 + Math.random() * 9000);
   console.log("OTP:", otp)
   localStorage.setItem("OTP", otp);
+  // const data = {email: userEmail, otp: otp}
+  const fd = new FormData();
+  fd.append("email", userEmail);
+  fd.append("otp", otp);
+debugger;
 try {
-  const response = await axios.post('https://crm-lara-mongo-7azts5zmra-uc.a.run.app/api/otp-email', {
-  email: userEmail,
-  otp: otp,
-  });
-  console.log('API response:', response.data.message);
+const response = await fetch('https://crm-lara-mongo-7azts5zmra-uc.a.run.app/api/otp-email',{
+  method:'POST',
+  body: fd,
+  // headers: {
+  //   "Content-Type": "application/x-www-form-urlencoded",
+  // }
+},
 
-
+).then(res => res.text());
+  console.log('API response:', response);
+  // const notify = () => toast("OTP sent to your Email");
+  // notify();
+  toast.success("OTP sent successfully !");
   setFormErrors({ password: null, api: null });
   setError(null);
 } catch (error) {
   console.error('API error:', error.response);
-  setFormErrors((old) => ({ ...old, api: 'Failed to send password data.' }));
+  setFormErrors((old) => ({ ...old, api: 'Failed to send password data.'}));
   setError('Failed to send password data.');
 }
 };
   const handleSubmit = async (e) => {
     e.preventDefault();
-    debugger;
  const userEmail = localStorage.getItem('userEmail');
 
   console.log("handleSubmit clicked", userEmail)
@@ -93,27 +108,43 @@ try {
       return; 
     }else if(otp === formFields.password){
       console.log("Right Password")
+      const data = userEmail;
+      // debugger;
       try {
         // Make the API request to send password data
-        const response = await axios.post('https://crm-lara-mongo-7azts5zmra-uc.a.run.app/businessportal/verify-email', {
-          email: userEmail,
-        },
-        {headers: {
-          "Access-Control-Allow-Origin": "*",
-          "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS"
-        }}
-      );
+      //   const response = await axios.post('https://crm-lara-mongo-7azts5zmra-uc.a.run.app/businessportal/verify-email', {
+      //     email: userEmail,
+      //   },
+      //   {headers: {
+      //     "Access-Control-Allow-Origin": "*",
+      //     "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS"
+      //   }}
+      // );
+
+      const response = fetch('https://crm-lara-mongo-7azts5zmra-uc.a.run.app/businessportal/verify-email',{
+        method: 'POST',
+        body: data,
+      }).then(res => res.json());
+
         console.log('API response:', response.data);
+        // toast.success("Verification Successful!");
+        toast.success('Verification successful!');
         navigate('/');
+
+        // setTimeout(() => {
+        //   setOpenSnackbar(true); // Show Snackbar when email is sent
+        // }, 2000);
+
         setFormErrors({api: null });
         setError(null);
       } catch (error) {
+        toast.failure("Error occured")
         console.error('API error:', error.response);
         setFormErrors((old) => ({ ...old, api: 'Failed to send password data.' }));
         setError('Failed to send password data.');
       }
     }else{
-      console.log("Enter right OTP");
+      console.log("Enter Right OTP");
     }
   };
   return (
@@ -154,14 +185,6 @@ try {
                     labelFontSize: "text-[27px]",
                     inputFontSize: "text-[22px]",
                   }}
-                  // label="* * * *"
-                  // onChange={(e) => {
-                  //   // setFormErrors((old) => ({ ...old, password: null }));
-                  //   setFormFields((old) => ({
-                  //     ...old,
-                  //     password: e?.target.value,
-                  //   }));
-                  // }}
                   onChange={(e) => {
                     const inputValue = e.target.value;
                     const onlyNumbers = /^[0-9]*$/;
@@ -178,9 +201,8 @@ try {
                   placeholder={"* * * *"}
                 />
               </div>
-              {/* {formErrors.password && ( */}
+
               <p className="my-1 text-sm text-primary pl-4">{error}</p>
-              {/* )} */}
               <div>
               <button onClick={generateOTP} className="w-1/2 h-[56px] bg-[#1FA3DB] text-[18px] rounded-md text-white hover:bg-[#b6ddee] mt-4">
                 Send OTP
@@ -212,6 +234,7 @@ try {
       {/* )}
         </div> */}
       {/* )} */}
+      <ToastContainer />
     </div>
   );
 }

@@ -1,0 +1,6 @@
+POST https://crm-lara-mongo-7azts5zmra-uc.a.run.app/api/otp-email
+Content-Type: application/x-www-form-urlencoded
+
+{
+    "email": "leo8545@gmail.com"
+}

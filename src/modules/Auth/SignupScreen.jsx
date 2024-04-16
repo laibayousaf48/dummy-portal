@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react";
 import axios from 'axios';
-
+import { useParams, useNavigate } from "react-router-dom";
 import TextInputField from "../../components/basic/TextInputField";
 import AppImages from "../../assets/images";
 
 
 function SignupScreen() {
- 
+  const navigate = useNavigate(); 
+  let { number } = useParams();
    const [currentImageIndex, setCurrentImageIndex] = useState(0);
    const images = [
      AppImages.img1,
@@ -93,19 +94,41 @@ function SignupScreen() {
       );
       return; // Exit the function early
     }
-  debugger;
+
     try {
-      const response = await axios.post('https://crm-lara-mongo-7azts5zmra-uc.a.run.app/businessportal/register', {
-        business_name: formFields.business_name, 
-        email: formFields.email,
-        password: formFields.password,
-        business_phone: formFields.business_phone,
-      });
+      const fd = new FormData()
+      fd.append('business_name', formFields.business_name)
+      fd.append('business_phone', formFields.business_phone)
+      fd.append('password', formFields.password)
+      fd.append('email', formFields.email)
+
+      const response = fetch('https://crm-lara-mongo-7azts5zmra-uc.a.run.app/api/business-portal/register', {
+        // headers: {
+        //   "Content-Type": "application/json"
+        // },
+        method: 'POST',
+        body: fd
+      }).then(res => res.json())
+
+
+    //   const response = await axios.post('https://crm-lara-mongo-7azts5zmra-uc.a.run.app/api/business-portal/register', 
+    //   {
+    //     business_name: formFields.business_name, 
+    //     email: formFields.email,
+    //     password: formFields.password,
+    //     business_phone: formFields.business_phone,
+    //   },
+    // // {headers: {
+    // //   "Access-Control-Allow-Origin": "*",
+    // //   "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS"
+    // // }}
+    // );
   
       console.log('API response:', response.data);
     console.log('userEmail', formFields.email)
     const userEmail = formFields.email;
     localStorage.setItem('userEmail', userEmail);
+    navigate("/verify/:number")
       // Reset formErrors and setError if the request is successful
       setFormErrors({
         email: "",
