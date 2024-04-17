@@ -110,7 +110,7 @@ function SignupScreen() {
         method: 'POST',
         body: fd
       }).then(res => res.json())
-
+debugger;
 
     //   const response = await axios.post('https://crm-lara-mongo-7azts5zmra-uc.a.run.app/api/business-portal/register', 
     //   {
@@ -125,7 +125,7 @@ function SignupScreen() {
     // // }}
     // );
   
-      console.log('API response:', response.data);
+      console.log('API response:', response);
     console.log('userEmail', formFields.email)
     const userEmail = formFields.email;
     localStorage.setItem('userEmail', userEmail);

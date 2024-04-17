@@ -61,39 +61,69 @@ function VerifyScreen() {
   //   setError(null);
     
   // };
- const userEmail = localStorage.getItem('userEmail');
- const generateOTP = async ()=>{
- const userEmail = localStorage.getItem('userEmail');
-  const otp = Math.floor(1000 + Math.random() * 9000);
-  console.log("OTP:", otp)
-  localStorage.setItem("OTP", otp);
-  // const data = {email: userEmail, otp: otp}
-  const fd = new FormData();
-  fd.append("email", userEmail);
-  fd.append("otp", otp);
-debugger;
-try {
-const response = await fetch('https://crm-lara-mongo-7azts5zmra-uc.a.run.app/api/otp-email',{
-  method:'POST',
-  body: fd,
-  // headers: {
-  //   "Content-Type": "application/x-www-form-urlencoded",
-  // }
-},
+//  const userEmail = localStorage.getItem('userEmail');
+//  const generateOTP = async ()=>{
+//  const userEmail = localStorage.getItem('userEmail');
+//   const otp = Math.floor(1000 + Math.random() * 9000);
+//   console.log("OTP:", otp)
+//   localStorage.setItem("OTP", otp);
+//   // const data = {email: userEmail, otp: otp}
+//   const fd = new FormData();
+//   fd.append("email", userEmail);
+//   fd.append("otp", otp);
+// debugger;
+// try {
+// const response = await fetch('https://crm-lara-mongo-7azts5zmra-uc.a.run.app/api/otp-email',{
+//   method:'POST',
+//   body: fd,
+//   // headers: {
+//   //   "Content-Type": "application/x-www-form-urlencoded",
+//   // }
+// },
 
-).then(res => res.text());
-  console.log('API response:', response);
-  // const notify = () => toast("OTP sent to your Email");
-  // notify();
-  toast.success("OTP sent successfully !");
-  setFormErrors({ password: null, api: null });
-  setError(null);
-} catch (error) {
-  console.error('API error:', error.response);
-  setFormErrors((old) => ({ ...old, api: 'Failed to send password data.'}));
-  setError('Failed to send password data.');
-}
-};
+// ).then(res => res.text());
+//   console.log('API response:', response);
+//   // const notify = () => toast("OTP sent to your Email");
+//   // notify();
+//   toast.success("OTP sent successfully !");
+//   setFormErrors({ password: null, api: null });
+//   setError(null);
+// } catch (error) {
+//   console.error('API error:', error.response);
+//   setFormErrors((old) => ({ ...old, api: 'Failed to send password data.'}));
+//   setError('Failed to send password data.');
+// }
+// };
+const userEmail = localStorage.getItem('userEmail');
+
+useEffect(() => {
+  const generateOTP = async () => {
+    const otp = Math.floor(1000 + Math.random() * 9000);
+    console.log("OTP:", otp)
+    localStorage.setItem("OTP", otp);
+    const fd = new FormData();
+    fd.append("email", userEmail);
+    fd.append("otp", otp);
+    debugger;
+    try {
+      const response = await fetch('https://crm-lara-mongo-7azts5zmra-uc.a.run.app/api/otp-email', {
+        method: 'POST',
+        body: fd,
+      }).then(res => res.text());
+      console.log('API response:', response);
+      toast.success("OTP sent successfully !");
+      setFormErrors({ password: null, api: null });
+      setError(null);
+    } catch (error) {
+      console.error('API error:', error.response);
+      setFormErrors((old) => ({ ...old, api: 'Failed to send password data.'}));
+      setError('Failed to send password data.');
+    }
+  };
+
+  generateOTP(); // Call the generateOTP function when the component mounts
+}, []); 
+
   const handleSubmit = async (e) => {
     e.preventDefault();
  const userEmail = localStorage.getItem('userEmail');
@@ -204,18 +234,18 @@ const response = await fetch('https://crm-lara-mongo-7azts5zmra-uc.a.run.app/api
 
               <p className="my-1 text-sm text-primary pl-4">{error}</p>
               <div>
-              <button onClick={generateOTP} className="w-1/2 h-[56px] bg-[#1FA3DB] text-[18px] rounded-md text-white hover:bg-[#b6ddee] mt-4">
-                Send OTP
+              <button onClick={handleSubmit} className="w-full h-[56px] bg-[#1FA3DB] text-[18px] rounded-md text-white hover:bg-[#b6ddee] mt-4">
+                Verify
               </button>
 
-              <button
+              {/* <button
                 className={buttonClass}
                 onMouseEnter={() => setIsHovered(true)}
                 onMouseLeave={() => setIsHovered(false)}
                 onClick={handleSubmit}
               >
                 Verify
-              </button>
+              </button> */}
               </div>
             
             </div>

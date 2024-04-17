@@ -30,6 +30,8 @@ import GrowthScreen from './modules/Growth/GrowthScreen';
 import IntegrationsScreen from './modules/Integrations/IntegrationsScreen';
 import BillingsScreen from './modules/Billing/BillingsScreen';
 import DemographicsScreen from './modules/Demographics/DemographicsScreen';
+import NotificationsScreen from './modules/Notifications/NotificationsScreen';
+import Form from './modules/Notifications/Form';
 import OTP from './modules/Auth/OTP.jsx';
 
 ReactDOM.createRoot(document.getElementById("root")).render(
@@ -58,6 +60,8 @@ ReactDOM.createRoot(document.getElementById("root")).render(
             <Route path="/help" element={<HelpScreen />} />
             <Route path="/channels" element={<ChannelsScreen />} />
             <Route path="/settings" element={<ProfileSettingsScreen />} />
+            <Route path="/notifications" element={<NotificationsScreen />} />
+            <Route path="/form" element={<Form />} />
           </Route>
 
           <Route

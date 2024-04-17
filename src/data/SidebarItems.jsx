@@ -4,6 +4,7 @@ import { FiMessageSquare } from "react-icons/fi"
 import { PiBriefcase, PiStarLight } from "react-icons/pi"
 import { HiOutlineDocumentText } from "react-icons/hi";
 import { LiaExchangeAltSolid } from "react-icons/lia";
+import { FiBell } from 'react-icons/fi';
 
 
 const SidebarItems = [
@@ -76,6 +77,13 @@ const SidebarItems = [
     icon: <HiOutlineDocumentText color={"#AFAFAF"} size={"24px"} />,
     activeIcon: <HiOutlineDocumentText color={"#24ACE3"} size={"24px"} />,
     route: "/billing",
+  },
+  {
+    id: 11,
+    title: "Notifications",
+    icon: <FiBell color={"#AFAFAF"} size={"24px"} />,
+    activeIcon: <FiBell color={"#24ACE3"} size={"24px"} />,
+    route: "/notifications",
   },
 ];
 export default SidebarItems 

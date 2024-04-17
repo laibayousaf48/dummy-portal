@@ -108,3 +108,28 @@ export function calculateDistance(latlng1, latlng2, unit = 'm', percision = 2) {
 export function toSentenceCase(text) {
     return text.split(' ').map(word => ["to", "of", "in", "by", "and"].includes(word) ? word : word[0].toUpperCase() + word.substring(1)).join(" ")
 }
+export function formatTimestamp(timestamp) {
+    // Parse the timestamp string into a Date object
+    const date = new Date(timestamp);
+
+    // Get day, month, and year
+    const day = date.getDate();
+    const month = date.toLocaleString('default', { month: 'long' });
+    const year = date.getFullYear();
+
+    // Get time (in 12-hour format)
+    const time = date.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true });
+
+    // Concatenate the formatted date and time
+    const formattedDateTime = `${day} ${month} ${year}, ${time}`;
+
+    return formattedDateTime;
+}
+
+export function hasUrduCharacters(inputString) {
+    // Regular expression to match Urdu Unicode ranges
+    var urduRegex = /[\u0600-\u06FF\u0750-\u077F\uFB50-\uFDFF\uFE70-\uFEFF]/;
+    
+    // Test if the input string contains Urdu characters
+    return urduRegex.test(inputString);
+}
