@@ -3,16 +3,64 @@ import DashboardTemplate from "../../components/Templates/DashboardTemplate.jsx"
 import StatCard from "../../components/StatCard.jsx";
 import { PiBriefcase } from "react-icons/pi";
 import AppImages from "../../assets/images/index.js";
-
+import Chart from "chart.js/auto";
+import { Line } from "react-chartjs-2";
+import { useEffect, useState } from "react";
 function DashboardScreen() {
-  const data = [
-    { time: "10:36 am", message: "promotions ads created" },
-    { time: "09:16 am", message: "new messages" },
-    { time: "10:36 am", message: "promotions ads created" },
-    { time: "09:16 am", message: "new messages" },
-    { time: "10:36 am", message: "promotions ads created" },
-    { time: "09:16 am", message: "new messages" },
-  ];
+  const [graphData, setGraphData] = useState(null);
+  const [data, setData] = useState([]);
+  // const data = [
+  //   { time: "10:36 am", message: "promotions ads created" },
+  //   { time: "09:16 am", message: "new messages" },
+  //   { time: "10:36 am", message: "promotions ads created" },
+  //   { time: "09:16 am", message: "new messages" },
+  //   { time: "10:36 am", message: "promotions ads created" },
+  //   { time: "09:16 am", message: "new messages" },
+  // ];
+
+  // const labels = ["January", "February", "March", "April", "May", "June"];
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch(`https://rogvftzrsuaealt3f7htqchmfa0zfumz.lambda-url.eu-west-1.on.aws/markers/nearby/of-any-category?lat=38.9912665&lng=-94.5797532`);
+        const result = await response.json();
+        const api_data = result.data.markers;
+        console.log("result", api_data)
+        setData(api_data);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  const graph_data = {
+    labels: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24","25", "26", "27", "28", "29", "30"],
+    datasets: [
+      {
+        label: "Total Audience of the month",
+        data: [0, 10, 5, 2, 20, 30, 45],
+        backgroundColor: "rgb(255, 99, 132)",
+        borderColor: "rgb(255, 99, 132)",
+      },
+    ],
+  };
+
+  //Earning Graph
+  const graph = {
+    labels: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24","25", "26", "27", "28", "29", "30"],
+    datasets: [
+      {
+        label: "Earning Graph",
+        data: [0],
+        backgroundColor: "rgb(0, 0, 255)",
+        borderColor: "rgb(0, 0, 255)",
+      },
+    ],
+  };
+
+
   return (
     <DashboardTemplate pageTitle={"Dashboard"}>
       <div className="flex flex-wrap items-center">
@@ -99,24 +147,29 @@ function DashboardScreen() {
 <div class="lg:w-full mx-auto bg-white mt-0 pt-0">
      
       <div class="flex flex-wrap px-10 py-8">
-        <div class="px-2 w-1/2 mb-4 border border-gray-300  bg-white">
-          <div class="flex flex-wrap w-full bg-white sm:py-24 py-16 sm:px-10 px-6 relative">
+        <div className="text-[14px] text-[#333333] font-semibold mb-4">Total Audience</div>
+        {/* <div class="px-2 w-full mb-4 border border-gray-300  bg-white"> */}
+          <div class="flex flex-wrap w-full bg-white sm:py-24 py-16 sm:px-10 px-6 relative border border-gray-300">
             <div class="text-center relative z-10 w-full">
-              <h2 class="text-xl text-gray-900 font-medium title-font mb-2">Maps</h2>
+              {/* <h2 class="text-xl text-gray-900 font-medium title-font mb-2">Maps</h2> */}
+              <Line data={graph_data} />
             </div>
           </div>
-        </div>
-        <div class="px-2 w-1/2 mb-4 border border-gray-300 ">
+        {/* </div> */}
+     
+        <div className="text-[14px] text-[#333333] font-semibold pl-12 mb-4">Earning</div>
+        <div class="px-2 w-full mb-4 border border-gray-300 ">
           <div class="flex flex-wrap w-full bg-white sm:py-24 py-16 sm:px-10 px-6 relative">
             <div class="text-center relative z-10 w-full">
-              <h2 class="text-xl text-gray-900 font-medium title-font mb-2">Graph</h2>
+              {/* <h2 class="text-xl text-gray-900 font-medium title-font mb-2">Graph</h2> */}
+              <Line data={graph} />
             </div>
           </div>
         </div>
       </div>
-      <div class="flex flex-wrap w-full bg-white py-5 px-10 relative ">
+      {/* <div class="flex flex-wrap w-full bg-white py-5 px-10 relative ">
          <div className="flex flex-col bg-white py-4 px-2 w-full border border-gray-200 mt-4">
-        <div className="text-[14px] text-[#333333] font-semibold">RECENT</div>
+        <div className="text-[14px] text-[#333333] font-semibold">NEAR BUSINESSES</div>
         <div className="border-[1px] border-[#6d6c6c] opacity-30 my-2"></div>
         {data.map((item, index) => (
           <div className="flex flex-row my-[2px] w-full" key={index}>
@@ -129,7 +182,58 @@ function DashboardScreen() {
           </div>
         ))}
       </div>
-      </div>
+      </div> */}
+
+<div class="flex flex-wrap w-full bg-white py-5 px-10 relative ">
+<div className="text-[14px] text-[#333333] font-semibold">NEAR BUSINESSES</div>
+         <div className="flex flex-col bg-white py-4 px-2 w-full border border-gray-200 mt-4">
+        <table className='w-full pr-4'>
+          <thead className='border-b-2'>
+            <tr className='flex justify-between text-left mb-2'>
+              <th className="text-left pr-8 ml-0 pl-12">Image</th>
+              <th className="text-left pr-10">Title</th>
+              <th className="text-left pr-12">Address</th>
+              <th className="pr-4"></th>
+            </tr>
+          </thead>
+          <tbody>
+          <div className=" opacity-30 my-2"></div>
+        {data.map((item, index) => (
+          <div className="flex flex-row my-[2px] w-full pl-12 pr-12 mb-4" key={index}>
+            <div className="text-[14px] text-[#333333]  w-[50%]">
+             {/* <img src={item.photo_urls} alt="Business" className="w-20 h-20 object-cover rounded-md" /> */}
+            {item.photo_urls !=="NA" ?(
+             <img src={item.photo_urls} alt="Business" className="w-20 h-20 object-cover rounded-md" />
+            ): (
+              <svg
+              fill="none"
+              stroke="currentColor"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              className="w-10 h-10"
+              viewBox="0 0 24 24"
+            >
+              <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"></path>
+              <circle cx="12" cy="7" r="4"></circle>
+            </svg>
+            )}
+           </div>
+            <div className="text-[14px] text-[#333333] opacity-70 w-[50%]">
+              {item.name}
+            </div>
+            <div className="text-[14px] text-[#333333] opacity-70 w-[50%]">
+              {item.address}
+            </div>
+          </div>
+        ))}
+          </tbody>
+          </table>
+       
+        </div>
+        </div>
+
+
     </div>
 
       </div>
