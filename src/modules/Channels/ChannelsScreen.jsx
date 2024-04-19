@@ -3,7 +3,7 @@ import DashboardTemplate from "../../components/Templates/DashboardTemplate.jsx"
 
 function ChannelsScreen() {
   return <DashboardTemplate pageTitle={"Channels"}>
-    <div>Coming Soon</div>
+      <div className="flex justify-center text-5xl">Coming Soon</div>
   </DashboardTemplate>;
 }
 

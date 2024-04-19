@@ -83,7 +83,8 @@ debugger;
     if(response.statusCode === 200){
       navigate("/verify/:number");
     }else{
-      console.log("error",response.errors.email);
+      console.log("error",response.errors.email[0]);
+      toast.error(response.errors.email[0]);
     }
       setFormErrors({
         email: "",
@@ -304,9 +305,20 @@ debugger;
                   placeholder={"03** *******"}
                 />
               </div>
+              <div className="text-[16px] text-[#A9A9A9] text-center mt-[20px]">
+            Already have an account ?
+            <span
+              className="text-[16px] text-[#24ACE3] ml-1 cursor-pointer hover:text-[#8cd2ee]"
+              onClick={(e) => {
+                navigate("/");
+              }}
+            >
+              Sign in
+            </span>
+</div>
               <p className="my-1 text-sm text-primary pl-4">{error}</p>
 
-              <button className="w-full h-[56px] bg-[#1FA3DB] text-[16px] rounded-md text-white hover:bg-[#a2dbf3]  mt-4">
+              <button className="w-full h-[56px] bg-[#1FA3DB] text-[16px] rounded-md text-white hover:bg-[#a2dbf3]  mt-4 mb-4">
                 Register
               </button>
             </div>

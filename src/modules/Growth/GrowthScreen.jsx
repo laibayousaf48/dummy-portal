@@ -3,7 +3,7 @@ import DashboardTemplate from "../../components/Templates/DashboardTemplate.jsx"
 
 function GrowthScreen() {
   return <DashboardTemplate pageTitle={"Growth"}>
-    <div>Coming Soon</div>
+       <div className="flex justify-center text-5xl">Coming Soon</div>
   </DashboardTemplate>;
 }
 

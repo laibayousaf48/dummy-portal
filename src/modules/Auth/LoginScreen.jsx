@@ -153,12 +153,14 @@ function LoginScreen() {
               {/* {formErrors.password && ( */}
               <p className="my-1 text-sm text-primary pl-4">{error}</p>
               {/* )} */}
-              <div className="text-[14px] text-right text-[#A9A9A9] ">
+              
+              {/* <div className="text-[14px] text-right text-[#A9A9A9] ">
                 <span className="underline cursor-pointer hover:text-[#605e5e]">
                   {" "}
                   Forgot Password
                 </span>
-              </div>
+              </div> */}
+
               {/* <Link to={`/verify/${formFields.mobile}`}> */}
                 <button className="w-full h-[56px] bg-[#1FA3DB] text-[16px] rounded-md text-white hover:bg-[#8cd2f0]  mt-4">
                   Sign in

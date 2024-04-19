@@ -11,7 +11,7 @@ function HelpScreen() {
 <div className="container px-5 py-24 mx-auto bg-white">
 <div className="ml-8 mr-8 justify-center">
     {loading ? (
-        <div className="loader">Loading...</div>
+        <div className="loader flex justify-center text-2xl">Loading...</div>
     ) : null}
     <iframe
         style={loading ? { display: 'none' } : {}} 

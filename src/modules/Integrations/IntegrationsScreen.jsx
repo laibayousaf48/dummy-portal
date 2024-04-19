@@ -3,7 +3,7 @@ import DashboardTemplate from "../../components/Templates/DashboardTemplate.jsx"
 
 function IntegrationsScreen() {
   return <DashboardTemplate pageTitle={"Integration"}>
-    <div>Coming Soon</div>
+     <div className="flex justify-center text-5xl">Coming Soon</div>
   </DashboardTemplate>;
 }
 
