@@ -6,9 +6,13 @@ import AppImages from "../../assets/images/index.js";
 import Chart from "chart.js/auto";
 import { Line } from "react-chartjs-2";
 import { useEffect, useState } from "react";
+// import SearchBar from'./SearchBar.jsx'
 function DashboardScreen() {
   const [graphData, setGraphData] = useState(null);
   const [data, setData] = useState([]);
+  const [apiInfo, setApiInfo] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [label, setLabel] = useState(null);
   // const data = [
   //   { time: "10:36 am", message: "promotions ads created" },
   //   { time: "09:16 am", message: "new messages" },
@@ -22,7 +26,13 @@ function DashboardScreen() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch(`https://rogvftzrsuaealt3f7htqchmfa0zfumz.lambda-url.eu-west-1.on.aws/markers/nearby/of-any-category?lat=38.9912665&lng=-94.5797532`);
+        const storedData = localStorage.getItem("Response");
+        const parsedData = JSON.parse(storedData)
+        console.log("latlng", parsedData.location.coordinates);
+        const location = parsedData.location.coordinates;
+        
+        // const response = await fetch('https://rogvftzrsuaealt3f7htqchmfa0zfumz.lambda-url.eu-west-1.on.aws/markers/nearby/of-any-category?lat=38.9912665&lng=-94.5797532');
+        const response = await fetch(`https://rogvftzrsuaealt3f7htqchmfa0zfumz.lambda-url.eu-west-1.on.aws/markers/nearby/of-any-category?lat=${location[1]}&lng=${location[0]}`);
         const result = await response.json();
         const api_data = result.data.markers;
         console.log("result", api_data)
@@ -35,25 +45,95 @@ function DashboardScreen() {
     fetchData();
   }, []);
 
-  const graph_data = {
-    labels: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24","25", "26", "27", "28", "29", "30"],
-    datasets: [
-      {
-        label: "Total Audience of the month",
-        data: [0, 10, 5, 2, 20, 30, 45],
-        backgroundColor: "rgb(255, 99, 132)",
-        borderColor: "rgb(255, 99, 132)",
-      },
-    ],
-  };
+const business_id = localStorage.getItem("Business ID");
+useEffect(() =>{
+  const getData = async() =>{
+    try{
+      const response = await fetch(`https://crm-lara-mongo-7azts5zmra-uc.a.run.app/businessportal/dashboard-stats?business_id=${business_id}`);
+      const fetchedData = await response.json();
+      console.log("Header api data", fetchedData);
+      // const{data} = fetchedData;
+      // console.log(data);
+      const{total_scans, active_users, earnings, link_clicked} = fetchedData;
+      setApiInfo({total_scans, active_users, earnings, link_clicked});
+      // const scans = fetchedData.total_scans;
+      console.log("scans", apiInfo.total_scans);
+      setLoading(false);
+    }catch(error){
+      console.error('Error fetching data:', error);
+    }
+  }
+getData();
+}, []);
 
+
+
+useEffect(() =>{
+  const getGraph= async() =>{
+    try{
+      const response = await fetch(`https://7b7xlap5jvkahyo5himfrzqy640qnadr.lambda-url.eu-west-1.on.aws/app/my-business/stats?business_id=${business_id}`);
+    const data = await response.json();
+    console.log("graph data", data);
+    const {offers, audience} = data.data;
+    // const one = offers.data
+    console.log("offers",offers);
+    setGraphData({offers, audience});
+    }catch(error){
+      console.error("Error", error);
+    }
+  }
+  getGraph();
+}, []);
+console.log("offers outside", graphData?.offers)
+// let offer_data = graphData.offers;
+// offer_data.map()
+//   const graph_data = {
+//     labels: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24","25", "26", "27", "28", "29", "30"],
+//     datasets: [
+//       {
+//         label: "Total Audience of the month",
+//         data: [0, 10, 5, 2, 20, 30, 45],
+//         backgroundColor: "rgb(255, 99, 132)",
+//         borderColor: "rgb(255, 99, 132)",
+//       },
+//     ],
+//   };
+
+// Assuming your API data is stored in a variable named 'apiData'
+
+// Extracting the values from each array in apiData
+const formattedData = graphData?.offers.map((item) => item[1]);
+const graph_data = {
+  labels: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+  datasets: [
+    {
+      label: "Total Audience of the month",
+      data: formattedData,
+      backgroundColor: "rgb(255, 99, 132)",
+      borderColor: "rgb(255, 99, 132)",
+    },
+  ],
+};
+
+// Now 'graph_data' will have the structure needed for your graph template
+// console.log(graph_data);
+
+// const labels = graphData?.audience.map((item) => item[0]);
+// console.log("labels", labels)
+// const rowLabel = labels? [0];
+// if(labels === "Days"){
+//    setLabel(["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"])
+// }else if(labels === "Month"){
+//   setLabel(["1", "2", "3"]);
+// }
+const formatData = graphData?.audience.map((item) => item[1]);
   //Earning Graph
   const graph = {
-    labels: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24","25", "26", "27", "28", "29", "30"],
+    labels: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
     datasets: [
       {
         label: "Earning Graph",
-        data: [0],
+        data: formatData,
         backgroundColor: "rgb(0, 0, 255)",
         borderColor: "rgb(0, 0, 255)",
       },
@@ -109,24 +189,30 @@ function DashboardScreen() {
             </div>
           </div>
         </div> */}
+        {/* <SearchBar /> */}
 <div class="container px-5 py-5 mx-auto bg-white">
     <div class="flex justify-around text-left">
         <div class="p-4 w-1/3 border-r-2 border-gray-300">
-            <h2 class="title-font font-medium text-3xl text-gray-900">9,342</h2>
+            {/* <h2 class="title-font font-medium text-3xl text-gray-900">{loading ?("Loading"):({apiInfo && apiInfo.total_scans})}</h2> */}
+            <h2 className="title-font font-medium text-3xl text-gray-900">
+             {/* {loading ? "Loading" : null} */}
+             {apiInfo && apiInfo.total_scans}
+           </h2>
+
             <div className='flex flex-inline flex-row justify-between'>
             <p class="leading-relaxed text-left text-xs text-gray-600">QR code scans &nbsp;</p>
             <p><a href="#" className='underline-offset-auto text-xs text-blue-500 font-light'>Report</a></p>
             </div>
         </div>
         <div class="p-4 w-1/3 ml-8 border-r-2 border-gray-300">
-            <h2 class="title-font font-medium text-3xl text-gray-900">821</h2>
+            <h2 class="title-font font-medium text-3xl text-gray-900">{apiInfo && apiInfo.link_clicked}</h2>
             <div className='flex flex-inline flex-row justify-between'>
             <p class="leading-relaxed text-left text-xs text-gray-600">Links clicked &nbsp;</p>
             <a href="#" className='underline-offset-auto text-xs text-blue-500 font-light'>Report</a>
             </div>
         </div>
         <div class="p-4 w-1/3 ml-8 border-r-2 border-gray-300">
-            <h2 class="title-font font-medium text-3xl text-gray-900">11,213</h2>
+            <h2 class="title-font font-medium text-3xl text-gray-900">{apiInfo && apiInfo.active_users}</h2>
             <div className='flex flex-inline flex-row justify-between'>
             <p class="leading-relaxed text-left text-xs text-gray-600">Active users &nbsp;</p>
            <a href="#" className='underline-offset-auto text-xs text-blue-500 font-light'>Report</a>
@@ -134,7 +220,7 @@ function DashboardScreen() {
         </div>
 
         <div class="p-4 w-1/3 ml-8">
-            <h2 class="title-font font-medium text-3xl text-gray-900">$129.22</h2>
+            <h2 class="title-font font-medium text-3xl text-gray-900">{apiInfo && apiInfo.earnings}</h2>
             <div className='flex flex-inline flex-row justify-between'>
             <p class="leading-relaxed text-left text-xs text-gray-600">Earnings &nbsp;</p>
             <a href="#" className='underline-offset-auto text-xs text-blue-500 font-light'>Report</a>
@@ -147,17 +233,16 @@ function DashboardScreen() {
 <div class="lg:w-full mx-auto bg-white mt-0 pt-0">
      
       <div class="flex flex-wrap px-10 py-8">
-        <div className="text-[14px] text-[#333333] font-semibold mb-4">Total Audience</div>
+        <div className="text-[14px] text-[#333333] font-semibold text-xl mb-4">Total Audience</div>
         {/* <div class="px-2 w-full mb-4 border border-gray-300  bg-white"> */}
-          <div class="flex flex-wrap w-full bg-white sm:py-24 py-16 sm:px-10 px-6 relative border border-gray-300">
-            <div class="text-center relative z-10 w-full">
-              {/* <h2 class="text-xl text-gray-900 font-medium title-font mb-2">Maps</h2> */}
+          <div class="flex flex-wrap w-full bg-white sm:py-24 py-4 sm:px-10 px-6 relative border border-gray-300">
+            <div class="text-center relative  w-full">
               <Line data={graph_data} />
             </div>
           </div>
         {/* </div> */}
      
-        <div className="text-[14px] text-[#333333] font-semibold pl-12 mb-4">Earning</div>
+        <div className="text-[14px] text-[#333333] font-semibold text-xl mb-4 mt-8">Earning</div>
         <div class="px-2 w-full mb-4 border border-gray-300 ">
           <div class="flex flex-wrap w-full bg-white sm:py-24 py-16 sm:px-10 px-6 relative">
             <div class="text-center relative z-10 w-full">
@@ -185,7 +270,7 @@ function DashboardScreen() {
       </div> */}
 
 <div class="flex flex-wrap w-full bg-white py-5 px-10 relative ">
-<div className="text-[14px] text-[#333333] font-semibold">NEAR BUSINESSES</div>
+<div className="text-[14px] text-[#333333] text-xl font-semibold">Near Businesses</div>
          <div className="flex flex-col bg-white py-4 px-2 w-full border border-gray-200 mt-4">
         <table className='w-full pr-4'>
           <thead className='border-b-2'>
@@ -202,8 +287,8 @@ function DashboardScreen() {
           <div className="flex flex-row my-[2px] w-full pl-12 pr-12 mb-4" key={index}>
             <div className="text-[14px] text-[#333333]  w-[50%]">
              {/* <img src={item.photo_urls} alt="Business" className="w-20 h-20 object-cover rounded-md" /> */}
-            {item.photo_urls !=="NA" ?(
-             <img src={item.photo_urls} alt="Business" className="w-20 h-20 object-cover rounded-md" />
+            {item.photo_urls && item.photo_urls !== "NA" ?(
+             <img src={item.photo_urls} alt="Business" className="w-20 h-20 object-cover" />
             ): (
               <svg
               fill="none"
@@ -211,7 +296,7 @@ function DashboardScreen() {
               strokeLinecap="round"
               strokeLinejoin="round"
               strokeWidth="2"
-              className="w-10 h-10"
+              className="w-10 h-10 text-gray-400"
               viewBox="0 0 24 24"
             >
               <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"></path>
@@ -220,10 +305,14 @@ function DashboardScreen() {
             )}
            </div>
             <div className="text-[14px] text-[#333333] opacity-70 w-[50%]">
-              {item.name}
+              {item.name ?(
+                item.name
+              ):("NA")}
             </div>
             <div className="text-[14px] text-[#333333] opacity-70 w-[50%]">
-              {item.address}
+              {item.address ?(item.address):(
+                "NA"
+              )}
             </div>
           </div>
         ))}

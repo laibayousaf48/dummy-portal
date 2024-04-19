@@ -517,8 +517,7 @@ console.log(business_id)
           const url = URL.createObjectURL(file);
           console.log('Selected image URL:', url); 
           setSelectedImage(URL.createObjectURL(file)); 
-          const fd = new FormData();
-           
+          const fd = new FormData(); 
           setBusinessInfo({...businessInfo, avatar_url: URL.createObjectURL(file)})
           firebase_service.uploadFileOnFirebase({
             file, 
@@ -631,11 +630,12 @@ console.log(business_id)
                     <div className="w-full h-screen pt-5 mt-10">
                       <form onSubmit={handleSubmit} className="max-w-md mx-auto my-5 gap-2 py-[3%] h-[70vh] justify-center flex flex-col">
                         {/* <div className="text-[40px] text-[#333333] mt-[16px] justify-center text-center">Update Profile</div> */}
-                        <div className="mt-[16px]">
+                        <div className="mt-[0]">
                           <TextInputField
                             type={"email"}
                             style={{ width: "w-full", labelFontSize: "text-[27px]", inputFontSize: "text-[22px]" }}
                             label="Email"
+                            className="mb-0"
                             onChange={(e) => setFormFields({ ...formFields, email: e.target.value })}
                             value={formFields.email}
                             error={formErrors.email}
@@ -643,7 +643,7 @@ console.log(business_id)
                             placeholder={"Type your Email"}
                           />
                         </div>
-                        <div className="mt-[16px]">
+                        <div className="mt-[0]">
                           <TextInputField
                             type={"text"}
                             style={{ width: "w-full", labelFontSize: "text-[27px]", inputFontSize: "text-[22px]" }}
@@ -655,11 +655,12 @@ console.log(business_id)
                             placeholder={"Type your Business Name"}
                           />
                         </div>
-                        <div className="mt-[16px]">
+                        <div className="mt-[0]">
                           <TextInputField
                             type={"number"}
                             style={{ width: "w-full", labelFontSize: "text-[27px]", inputFontSize: "text-[22px]" }}
                             label="Business Phone"
+                            className="mb-0"
                             onChange={(e) => setFormFields({ ...formFields, business_phone: e.target.value })}
                             value={formFields.business_phone}
                             error={formErrors.business_phone}
@@ -667,7 +668,7 @@ console.log(business_id)
                             placeholder={"03** *******"}
                           />
                         </div>
-                        <div className="mt-[16px]">
+                        <div className="mt-[0]">
                           <TextInputField
                             type="text"
                             style={{ width: "w-full", labelFontSize: "text-[27px]", inputFontSize: "text-[22px]" }}
@@ -679,7 +680,7 @@ console.log(business_id)
                             placeholder={"Address"}
                           />
                         </div>
-                        <div className="mt-[16px]">
+                        <div className="mt-[0]">
                           <TextInputField
                             type="text"
                             style={{ width: "w-full", labelFontSize: "text-[27px]", inputFontSize: "text-[22px]" }}
@@ -692,7 +693,7 @@ console.log(business_id)
                           />
                         </div>
                         <p className="my-1 text-sm text-primary pl-4">{error}</p>
-                        <button className="w-full h-[56px] bg-[#1FA3DB] text-[16px] p-4 rounded-md text-white hover:bg-[#a2dbf3]  mt-4">
+                        <button className="w-full h-[56px] bg-[#1FA3DB] text-[16px] p-4 rounded-md text-white hover:bg-[#a2dbf3]">
                            Update
                           </button>
                       </form>

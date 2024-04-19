@@ -4,7 +4,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import TextInputField from "../../components/basic/TextInputField";
 import AppImages from "../../assets/images";
 import 'react-toastify/dist/ReactToastify.css';
-// import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer, toast } from 'react-toastify';
 
 function SignupScreen() {
   const navigate = useNavigate(); 
@@ -45,43 +45,6 @@ function SignupScreen() {
   });
   const [error, setError] = useState("");
   // const [showLoader, setShowLoader] = useState(false);
-
-  // const handleSubmit = (e) => {
-  //    const password = formFields.password;
-  //    const confirmPassword = formFields.cpassword;
-
-  //    if (password !== confirmPassword) {
-  //      alert(
-  //        "Password and Confirm Password do not match. Please enter the same password."
-  //      );
-  //      return; // Exit the function early
-  //    }
-  //   console.log(
-  //     "data",
-  //     formFields.userName,
-  //     formFields.email,
-  //     formFields.mobile,
-  //     formFields.password,
-  //     formFields.cpassword,
-  //     formFields.businessName,
-  //     formFields.businessPhone,
-  //   );
-    
-  //   e.preventDefault();
-  //   let hasErrors = false;
-   
-  //   if (formFields.password.toString().trim().length === 0) {
-  //     setFormErrors((old) => ({ ...old, password: "Password is required" }));
-  //     hasErrors = true;
-  //   }
-  //   if (hasErrors) {
-  //     return;
-  //   }
-    
-  //   setFormErrors({ userName: null, email:"", mobile: null, password: null,cpassword: null, businessName:"", businessPhone:"", api: null });
-  //   setError(null);
-    
-  // };
   
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -103,7 +66,7 @@ function SignupScreen() {
       fd.append('password', formFields.password)
       fd.append('email', formFields.email)
 
-      const response = fetch('https://crm-lara-mongo-7azts5zmra-uc.a.run.app/api/business-portal/register', {
+      const response = await fetch('https://crm-lara-mongo-7azts5zmra-uc.a.run.app/api/business-portal/register', {
         // headers: {
         //   "Content-Type": "application/json"
         // },
@@ -112,25 +75,16 @@ function SignupScreen() {
       }).then(res => res.json())
 debugger;
 
-    //   const response = await axios.post('https://crm-lara-mongo-7azts5zmra-uc.a.run.app/api/business-portal/register', 
-    //   {
-    //     business_name: formFields.business_name, 
-    //     email: formFields.email,
-    //     password: formFields.password,
-    //     business_phone: formFields.business_phone,
-    //   },
-    // // {headers: {
-    // //   "Access-Control-Allow-Origin": "*",
-    // //   "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS"
-    // // }}
-    // );
   
-      console.log('API response:', response);
+ console.log('API response:', response);
     console.log('userEmail', formFields.email)
     const userEmail = formFields.email;
     localStorage.setItem('userEmail', userEmail);
-    navigate("/verify/:number")
-      // Reset formErrors and setError if the request is successful
+    if(response.statusCode === 200){
+      navigate("/verify/:number");
+    }else{
+      console.log("error",response.errors.email);
+    }
       setFormErrors({
         email: "",
         password: null,
@@ -142,7 +96,6 @@ debugger;
       setError(null);
     } catch (error) {
       console.error('API error:', error);
-      // Handle API error by setting appropriate form errors or error state
       setFormErrors((old) => ({ ...old, api: 'Failed to send data to the server.' }));
       setError('Failed to send data to the server.');
     }
@@ -372,6 +325,7 @@ debugger;
       {/* )}
         </div> */}
       {/* )} */}
+      <ToastContainer />
     </div>
   );
 }

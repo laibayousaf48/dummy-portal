@@ -56,14 +56,18 @@ function LoginScreen() {
       `https://7b7xlap5jvkahyo5himfrzqy640qnadr.lambda-url.eu-west-1.on.aws/auth/login`,
       { email: formFields.email, password: formFields.password }
     ).then(res => {
+      debugger;
       if(res.data?.status == 200) {
         const {token, user} = res.data?.data 
         const {business} = res.data.data.business
         //  console.log("response", res.data.data.business)
-        authCtx.login(token, user, location.state?.from,business)
+        authCtx.login(token, user, location.state?.from,business);
         const business_id = res.data.data.business._id;
-        console.log(business_id)
+        console.log(business_id);
+        const data = res.data.data.business
+       console.log("Response", res.data.data.business);
         localStorage.setItem("Business ID", business_id);
+         localStorage.setItem("Response", JSON.stringify(data))
       } else {
         throw new Error(res.data?.message ?? "Error logging you in! Please try again")
       }

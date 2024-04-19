@@ -41,7 +41,7 @@ function OffersRequestsScreen() {
     package: "",
     duration: "",
     latitude: "",
-    lomgitude: "",
+    longitude: "",
   });
   const requiredFields = [
     "state",
@@ -66,7 +66,7 @@ function OffersRequestsScreen() {
          }))
          setFormFields((old) => ({
            ...old,
-           lomgitude: position.coords.longitude,
+           longitude: position.coords.longitude,
          }))
          setFormFields((old) => ({
            ...old,
@@ -102,50 +102,107 @@ function OffersRequestsScreen() {
     setIsInputFocused(false);
   };
 
-  const handleSubmit = async(e) => {
-    e.preventDefault();
-    const emptyFields = requiredFields.filter((field) => !formFields[field]);
-    if (emptyFields.length > 0) {
-      alert(`Please fill in the following fields: ${emptyFields.join(", ")}`);
-      return;
-    }
-    console.log("Imagesss",imageurls)
-    const res = LambdaAPI.post("/create-offer", {
-      category: formFields.state,
-      title: formFields.title,
-      message: formFields.message,
-      location: formFields.location,
-      lat: formFields.latitude,
-      lng: formFields.lomgitude,
-      images: imageurls,
+//   const handleSubmit = async(e) => {
+//     e.preventDefault();
+//     const emptyFields = requiredFields.filter((field) => !formFields[field]);
+//     if (emptyFields.length > 0) {
+//       alert(`Please fill in the following fields: ${emptyFields.join(", ")}`);
+//       return;
+//     }
+//     console.log("Imagesss",imageurls)
+//     const res = LambdaAPI.post("https://rogvftzrsuaealt3f7htqchmfa0zfumz.lambda-url.eu-west-1.on.aws/create-post", {
+//       category: formFields.state,
+//       title: formFields.title,
+//       message: formFields.message,
+//       location: formFields.location,
+//       lat: formFields.latitude,
+//       lng: formFields.longitude,
+//       images: imageurls,
+//     })
+//       .then((res) => {
+//         if (res.data?.status == 200) {
+//           console.log("response", res);
+//         } else {
+//           throw new Error(
+//             res.data?.message ?? "Error logging you in! Please try again"
+//           );
+//         }
+//       })
+//       .catch((err) => {
+//         console.log(err);
+//       })
+//       .finally(() => {
+//         // setIsLoading(false);
+//       });
+// // console.log("Response",res);
+//     // console.log(
+//     //   "data",
+//     //   formFields.title,
+//     //   formFields.message,
+//     //   formFields.state,
+//     //   formFields.location,
+//     //   formFields.package,
+//     //   formFields.duration,
+//     //   selectedFiles
+//     // );
+//   };
+
+const handleSubmit = async(e) => {
+  e.preventDefault();
+  const emptyFields = requiredFields.filter((field) => !formFields[field]);
+  if (emptyFields.length > 0) {
+    alert(`Please fill in the following fields: ${emptyFields.join(", ")}`);
+    return;
+  }
+  console.log("Imagesss",imageurls)
+  const res = fetch("https://rogvftzrsuaealt3f7htqchmfa0zfumz.lambda-url.eu-west-1.on.aws/create-post?key=oc.fc8ab25facba44eb959939ad6d3f8c6a", {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ 
+        category: formFields.state,
+        title: formFields.title,
+        // message: formFields.message,
+        location: formFields.location,
+        lat: formFields.latitude,
+        lng: formFields.longitude,
+        // images: imageurls,
+        messages: [
+          { type: 'text', content: `${formFields.message}` },
+          { type: 'image', content: `${imageurls}` }
+        ]
+      })
+    
+  })
+    .then((res) => {
+      if (res.data?.status == 200) {
+        console.log("response", res);
+      } else {
+        throw new Error(
+          res.data?.message ?? "Error logging you in! Please try again"
+        );
+      }
     })
-      .then((res) => {
-        if (res.data?.status == 200) {
-          console.log("response", res);
-        } else {
-          throw new Error(
-            res.data?.message ?? "Error logging you in! Please try again"
-          );
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      })
-      .finally(() => {
-        // setIsLoading(false);
-      });
+    .catch((err) => {
+      console.log(err);
+    })
+    .finally(() => {
+      // setIsLoading(false);
+    });
 // console.log("Response",res);
-    // console.log(
-    //   "data",
-    //   formFields.title,
-    //   formFields.message,
-    //   formFields.state,
-    //   formFields.location,
-    //   formFields.package,
-    //   formFields.duration,
-    //   selectedFiles
-    // );
-  };
+  // console.log(
+  //   "data",
+  //   formFields.title,
+  //   formFields.message,
+  //   formFields.state,
+  //   formFields.location,
+  //   formFields.package,
+  //   formFields.duration,
+  //   selectedFiles
+  // );
+};
+
   const states = ["Ac service", "phone", "rental car"];
   const packages = ["listing", "add"];
   const durations = ["6 months", "1 year", "1.5 year"];
@@ -392,7 +449,7 @@ function OffersRequestsScreen() {
             X
           </button>
                 <form
-                  // onSubmit={handleSubmit}
+                  onSubmit={handleSubmit}
                   className="max-w-md mx-auto my-2 w-full h-[80vh] justify-between flex flex-col"
                 >
                   {part === 1 ? (
