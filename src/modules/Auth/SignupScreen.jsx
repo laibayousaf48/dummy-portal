@@ -72,15 +72,13 @@ function SignupScreen() {
         // },
         method: 'POST',
         body: fd
-      }).then(res => res.json())
-debugger;
-
-  
+      }).then(res => res.json())  
  console.log('API response:', response);
     console.log('userEmail', formFields.email)
     const userEmail = formFields.email;
     localStorage.setItem('userEmail', userEmail);
-    if(response.statusCode === 200){
+    // if(response.statusCode === 200){
+      if(response.message === "Registration successful with unverified email"){
       navigate("/verify/:number");
     }else{
       console.log("error",response.errors.email[0]);
@@ -258,14 +256,15 @@ debugger;
                   // }}
                   onChange={(e) => {
                     const inputValue = e.target.value;
-                    const regex = /^[A-Za-z]+$/;
-                    if (inputValue === '' || regex.test(inputValue) || inputValue === '') {
+                    const regex = /^[A-Za-z ]+$/; // Updated regex to include space
+                    if (inputValue === '' || regex.test(inputValue)) {
                       setFormFields((old) => ({
                         ...old,
                         business_name: inputValue,
                       }));
                     }
                   }}
+                  
                   
                   value={formFields.business_name}
                   error={formErrors.business_name}
@@ -292,13 +291,13 @@ debugger;
                   onChange={(e) => {
                     const inputValue = e.target.value;
                     const regex = /^[0-9]+$/;
-                    if (regex.test(inputValue) && inputValue.length <= 11) {
+                    if (inputValue === '' || (regex.test(inputValue) && inputValue.length <= 11)) {
                       setFormFields((old) => ({
                         ...old,
                         business_phone: inputValue,
                       }));
                     }
-                  }}
+                  }}                  
                   value={formFields.business_phone}
                   error={formErrors.business_phone}
                   isRequired={true}

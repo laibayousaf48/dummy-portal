@@ -104,7 +104,7 @@ useEffect(() => {
     const fd = new FormData();
     fd.append("email", userEmail);
     fd.append("otp", otp);
-    debugger;
+  
     try {
       const response = await fetch('https://crm-lara-mongo-7azts5zmra-uc.a.run.app/api/otp-email', {
         method: 'POST',
@@ -121,7 +121,7 @@ useEffect(() => {
     }
   };
 
-  generateOTP(); // Call the generateOTP function when the component mounts
+  generateOTP(); 
 }, []); 
 
   const handleSubmit = async (e) => {

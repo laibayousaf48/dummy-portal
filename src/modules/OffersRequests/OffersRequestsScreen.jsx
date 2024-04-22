@@ -33,6 +33,8 @@ function OffersRequestsScreen() {
   };
   // const [latitude, setLatitude] = useState(null);
   // const [longitude, setLongitude] = useState(null);
+  const [offerData, setOfferData] = useState([]);
+
   const [formFields, setFormFields] = useState({
     title: "",
     message: "",
@@ -154,8 +156,9 @@ const handleSubmit = async(e) => {
     alert(`Please fill in the following fields: ${emptyFields.join(", ")}`);
     return;
   }
+  debugger;
   console.log("Imagesss",imageurls)
-  const res = fetch("https://rogvftzrsuaealt3f7htqchmfa0zfumz.lambda-url.eu-west-1.on.aws/create-post?key=oc.fc8ab25facba44eb959939ad6d3f8c6a", {
+  const res = await fetch("https://rogvftzrsuaealt3f7htqchmfa0zfumz.lambda-url.eu-west-1.on.aws/create-post?key=oc.fc8ab25facba44eb959939ad6d3f8c6a", {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -163,7 +166,6 @@ const handleSubmit = async(e) => {
     body: JSON.stringify({ 
         category: formFields.state,
         title: formFields.title,
-        // message: formFields.message,
         location: formFields.location,
         lat: formFields.latitude,
         lng: formFields.longitude,
@@ -180,7 +182,7 @@ const handleSubmit = async(e) => {
         console.log("response", res);
       } else {
         throw new Error(
-          res.data?.message ?? "Error logging you in! Please try again"
+          res.data?.message ?? "Error in Publishing your Post"
         );
       }
     })
@@ -202,6 +204,47 @@ const handleSubmit = async(e) => {
   //   selectedFiles
   // );
 };
+
+// useEffect(() => {
+//   const offerData = async () => {
+//     try {
+//       const response = await fetch(`https://crm-lara-mongo-7azts5zmra-uc.a.run.app/businessportal/offers?user_id=65e867611f2cadccb9922295`);
+//       const responseData = await response.json();
+//       console.log("Graph data:", responseData.offers);
+
+//       // Extract required variables from each object in 'offers' array
+//       const extractedData = responseData.offers.map(offer => ({
+//         reach: offer.reach,
+//         category: offer.category,
+//         location: offer.location
+//       }));
+//       console.log("Extracted data:", extractedData);
+
+//       // Set extracted data to state
+//       setData(extractedData);
+//     } catch (error) {
+//       console.error("Error fetching data:", error);
+//     }
+//   };
+
+//   offerData();
+// }, []);
+
+useEffect(() => {
+  const fetchData = async () => {
+    try {
+      const response = await fetch('https://crm-lara-mongo-7azts5zmra-uc.a.run.app/businessportal/offers?user_id=65e867611f2cadccb9922295');
+      const data = await response.json();
+      console.log("graph data", data.offers);
+      setOfferData(data.offers);
+    } catch (error) {
+      console.error("Error", error);
+    }
+  };
+
+  fetchData();
+}, []);
+
 
   const states = ["Ac service", "phone", "rental car"];
   const packages = ["listing", "add"];
@@ -348,11 +391,11 @@ const handleSubmit = async(e) => {
           </TabList>
 
           <TabPanel>
-            <div> <div className="container px-5 py-12 mx-auto flex flex-wrap">
+            {/* <div> <div className="container px-5 py-12 mx-auto flex flex-wrap">
 <div className="flex flex-wrap -m-4 mt-1 w-5/6">
     <div className="p-4 lg:w-full md:w-full sm:justify-center">
       <div className="flex border border-gray-400  sm:flex-row flex-col">
-        {/* <div class=" sm:mr-8 sm:mb-0 mb-4 inline-flex items-center justify-center  bg-indigo-100 text-indigo-500 flex-shrink-0"> */}
+
         <div className='flex-[1_1_25%] flex-grow inline-flex items-center justify-center p-2'>
           <img src="src/assets/images/img.jpg" alt="Image" className='block mx-auto object-contain p-2' />
         </div>
@@ -419,7 +462,43 @@ const handleSubmit = async(e) => {
       </div>
     </div>
   </div>
-</div></div>
+</div></div> */}
+ <div className="container px-5 py-12 mx-auto flex flex-wrap">
+      {offerData.map((offer, index) => (
+        <div key={index} className="flex flex-wrap -m-4 mt-1 w-5/6">
+          <div className="p-4 lg:w-full md:w-full sm:justify-center">
+            <div className="flex border border-gray-400  sm:flex-row flex-col">
+              <div className='flex-[1_1_25%] flex-grow inline-flex items-center justify-center p-2'>
+                <img src={offer.query_messages[0].content} alt="Image" className='block mx-auto object-contain p-2' />
+              </div>
+              <div className="flex-[1_1_50%] flex-grow sm:justify-center p-2">
+                <h2 className="text-gray-900 text-lg title-font font-medium mb-1 mt-3 text-left">{offer.business_name}</h2>
+                <p className="leading-relaxed text-base text-left mb-4">{offer.query_messages[0].content}</p>
+                <p className="leading-relaxed text-base text-left">{offer.requirements}</p>
+              </div>
+              <div className="flex-[1_1_25%] flex-grow border-l border-gray-400 bg-gray-100 pl-4 pr-4 pb-4 pt-1">
+                <div className="flex-grow flex flex-col">
+                  <table className="border-collapse w-full">
+                    <tr> 
+                      <td className="pl-2 pr-2 pb-2 pt-0 text-left text-lg">Reach</td>
+                      <td className="pl-2 pr-2 pb-2 pt-0 text-center text-lg">Views</td>
+                    </tr>
+                    <tr>
+                      <td className="p-2 font-normal text-3xl text-left">{offer.reach}</td>
+                      <td className="p-2 font-normal text-3xl text-center">{offer.__v}</td>
+                    </tr>
+                    <tr>
+                      <td className="p-2 text-left text-lg"><strong className='font-normal text-3xl'>{offer.calls}</strong><br /> Calls</td>
+                      <td className="p-2 text-left text-lg"><strong className='font-normal text-3xl'>{offer.distance}</strong><br />Distance(m)</td>
+                    </tr>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
             <div className="flex flex-col items-center justify-center h-full">
               <div className="mt-3">
                 <img src={AppImages.postImage} alt="" />

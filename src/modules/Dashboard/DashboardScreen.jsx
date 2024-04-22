@@ -12,7 +12,7 @@ function DashboardScreen() {
   const [data, setData] = useState([]);
   const [apiInfo, setApiInfo] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [label, setLabel] = useState(null);
+  // const [label, setLabel] = useState(null);
   // const data = [
   //   { time: "10:36 am", message: "promotions ads created" },
   //   { time: "09:16 am", message: "new messages" },
@@ -84,27 +84,20 @@ useEffect(() =>{
   }
   getGraph();
 }, []);
-console.log("offers outside", graphData?.offers)
-// let offer_data = graphData.offers;
-// offer_data.map()
-//   const graph_data = {
-//     labels: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24","25", "26", "27", "28", "29", "30"],
-//     datasets: [
-//       {
-//         label: "Total Audience of the month",
-//         data: [0, 10, 5, 2, 20, 30, 45],
-//         backgroundColor: "rgb(255, 99, 132)",
-//         borderColor: "rgb(255, 99, 132)",
-//       },
-//     ],
-//   };
+// console.log("offers outside", graphData?.offers)
 
-// Assuming your API data is stored in a variable named 'apiData'
 
-// Extracting the values from each array in apiData
+const labels = graphData?.audience.map((item) => item[0]);
+var rowLabel = 0;
+if(labels?.includes("Days")){
+rowLabel = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
+}else if(labels?.includes("Months")){
+  rowLabel=["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+}
+// offers graph
 const formattedData = graphData?.offers.map((item) => item[1]);
 const graph_data = {
-  labels: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+  labels: rowLabel,
   datasets: [
     {
       label: "Total Audience of the month",
@@ -115,21 +108,10 @@ const graph_data = {
   ],
 };
 
-// Now 'graph_data' will have the structure needed for your graph template
-// console.log(graph_data);
-
-// const labels = graphData?.audience.map((item) => item[0]);
-// console.log("labels", labels)
-// const rowLabel = labels? [0];
-// if(labels === "Days"){
-//    setLabel(["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"])
-// }else if(labels === "Month"){
-//   setLabel(["1", "2", "3"]);
-// }
-const formatData = graphData?.audience.map((item) => item[1]);
   //Earning Graph
+const formatData = graphData?.audience.map((item) => item[1]);
   const graph = {
-    labels: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+    labels: rowLabel,
     datasets: [
       {
         label: "Earning Graph",

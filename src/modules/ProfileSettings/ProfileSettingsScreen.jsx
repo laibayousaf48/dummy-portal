@@ -465,6 +465,7 @@ import DashboardTemplate from "../../components/Templates/DashboardTemplate.jsx"
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import TextInputField from "../../components/basic/TextInputField";
+import Map from "../../components/basic/Map";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import firebase_service from "../../utils/firebase_service.js";
@@ -559,7 +560,6 @@ console.log(business_id)
       const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-          debugger;
           const data = new FormData()
           data.append('business_name', formFields.business_name)
           data.append('business_phone', formFields.business_phone)
@@ -619,11 +619,13 @@ console.log(business_id)
                       </svg>
                     )}
                   </div>
-
                   <div className="flex flex-col items-center text-center justify-center">
                     <div className="w-12 h-1 bg-gray-500 rounded mt-2 mb-4"></div>
                   </div>
                   <button onClick={handleIconClick} className="focus:outline-none">Edit Profile Picture</button>
+                      <div className="mt-8 container overflow-hidden w-400px h-400px">
+                        <Map width="400px" height="400px"/>
+                      </div>
                 </div>
                 <div className="sm:w-2/3 sm:pl-8 sm:py-8 sm:border-l border-gray-200 sm:border-t-0 border-t mt-4 pt-4 sm:mt-0 text-center sm:text-left">
                   <div className="flex flex-row h-screen bg-white">
