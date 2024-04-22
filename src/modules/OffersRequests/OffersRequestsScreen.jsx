@@ -468,8 +468,25 @@ useEffect(() => {
         <div key={index} className="flex flex-wrap -m-4 mt-1 w-5/6">
           <div className="p-4 lg:w-full md:w-full sm:justify-center">
             <div className="flex border border-gray-400  sm:flex-row flex-col">
-              <div className='flex-[1_1_25%] flex-grow inline-flex items-center justify-center p-2'>
-                <img src={offer.query_messages[0].content} alt="Image" className='block mx-auto object-contain p-2' />
+              <div className='flex-[1_1_25%] flex-grow inline-flex items-center justify-center'>
+                {/* <img src={offer.query_messages[1].content} alt="Image" className='block mx-auto object-contain p-2' /> */}
+                {offer.query_messages && offer.query_messages.length > 1 ? (
+            <img src={offer.query_messages[1].content} alt="Image" className='block mx-auto object-contain'  />
+            ) : (
+           <svg
+           fill="none"
+           stroke="currentColor"
+           strokeLinecap="round"
+           strokeLinejoin="round"
+           strokeWidth="2"
+           className="w-10 h-10 text-gray-400"
+           viewBox="0 0 24 24"
+         >
+           <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"></path>
+           <circle cx="12" cy="7" r="4"></circle>
+         </svg>
+         )}
+
               </div>
               <div className="flex-[1_1_50%] flex-grow sm:justify-center p-2">
                 <h2 className="text-gray-900 text-lg title-font font-medium mb-1 mt-3 text-left">{offer.business_name}</h2>

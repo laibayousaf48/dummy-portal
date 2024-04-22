@@ -86,7 +86,7 @@
 // }
 
 // export default GoogleApiWrapper({
-//   apiKey: 'AIzaSyBxh8DT3s64AR1py7V5KHuHm7kvlM3D5sE', // Replace with your actual API key
+//   apiKey: 'AIzaSyBxh8DT3s64AR1py7V5KHuHm7kvlM3D5sE', 
 // })(MapContainer);
 
 
@@ -97,24 +97,32 @@ import { Map, Marker, GoogleApiWrapper } from 'google-maps-react';
 function MapContainer(props) {
   const [markerPosition, setMarkerPosition] = useState(null);
 
-  const handleMapClick = (mapProps, map, clickEvent) => {
+  const handleMapClick = async(mapProps, map, clickEvent) => {
     const { latLng } = clickEvent;
     const lat = latLng.lat();
     const lng = latLng.lng();
     setMarkerPosition({ lat, lng });
     console.log("location", markerPosition);
-    const mapPosition = async() =>{
+    // const mapPosition = async () => {
         try {
-            const response = await fetch('https://example.com/api/data');
-            const data = await response.json();
-          } catch (error) {
-            console.error('Error fetching data:', error);
-          }
+          const business_id = localStorage.getItem("Business ID");
+          const response = await fetch(`https://crm-lara-mongo-7azts5zmra-uc.a.run.app/businessportal/business-profile${business_id}`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ lat, lng }),
+          });
+          const data = await response.json();
+           console.log("MAp Response", response)
+        } catch (error) {
+          console.error('Error fetching data:', error);
         }
-  };
+    //   };
+    }      
 
   return (
-    <div style={{ width: '100%', height: '400px' }}>
+    <div style={{ width: '50%', height: '400px' }}>
       <Map
         google={props.google}
         zoom={2}
@@ -136,5 +144,5 @@ function MapContainer(props) {
 }
 
 export default GoogleApiWrapper({
-  apiKey: 'AIzaSyBxh8DT3s64AR1py7V5KHuHm7kvlM3D5sE', // Replace with your actual API key
+  apiKey: 'AIzaSyBxh8DT3s64AR1py7V5KHuHm7kvlM3D5sE',
 })(MapContainer);

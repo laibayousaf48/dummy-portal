@@ -1,10 +1,11 @@
 import { MdOutlineSpaceDashboard } from "react-icons/md"
-import { IoAnalytics, IoHelpCircleOutline, IoPersonOutline, IoSettingsOutline } from "react-icons/io5"
+import { IoAnalytics, IoHelpCircleOutline, IoPersonOutline, IoSettingsOutline, IoCalendarOutline } from "react-icons/io5"
 import { FiMessageSquare } from "react-icons/fi"
 import { PiBriefcase, PiStarLight } from "react-icons/pi"
 import { HiOutlineDocumentText } from "react-icons/hi";
 import { LiaExchangeAltSolid } from "react-icons/lia";
 import { FiBell } from 'react-icons/fi';
+// import { IoIosCalendarOutline } from 'react-icons/fi';
 
 
 const SidebarItems = [
@@ -84,6 +85,13 @@ const SidebarItems = [
     icon: <FiBell color={"#AFAFAF"} size={"24px"} />,
     activeIcon: <FiBell color={"#24ACE3"} size={"24px"} />,
     route: "/notifications",
+  },
+  {
+    id: 12,
+    title: "Invitations",
+    icon: <IoCalendarOutline color={"#AFAFAF"} size={"24px"} />,
+    activeIcon: <IoCalendarOutline color={"#24ACE3"} size={"24px"} />,
+    route: "/invitations",
   },
 ];
 export default SidebarItems 

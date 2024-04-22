@@ -31,6 +31,7 @@ import IntegrationsScreen from './modules/Integrations/IntegrationsScreen';
 import BillingsScreen from './modules/Billing/BillingsScreen';
 import DemographicsScreen from './modules/Demographics/DemographicsScreen';
 import NotificationsScreen from './modules/Notifications/NotificationsScreen';
+import InvitationsScreen from './modules/Invitations/InvitationsScreen';
 import Form from './modules/Notifications/Form';
 import OTP from './modules/Auth/OTP.jsx';
 
@@ -62,6 +63,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
             <Route path="/settings" element={<ProfileSettingsScreen />} />
             <Route path="/notifications" element={<NotificationsScreen />} />
             <Route path="/form" element={<Form />} />
+            <Route path="/invitations" element={<InvitationsScreen />} />
           </Route>
 
           <Route
