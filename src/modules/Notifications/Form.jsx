@@ -98,8 +98,8 @@ const Form = () => {
 
   return (
     <DashboardTemplate pageTitle={'Add New Notification'}>
-    <div className="flex justify-center items-center bg-white">
-      <form onSubmit={handleSubmit} className="w-[70%] bg-[#24ACE31F] p-3 mt-[50px]">
+    <div className="flex justify-center md:w-full sm:m-0 items-center bg-white">
+      <form onSubmit={handleSubmit} className="w-[70%] bg-[#24ACE31F] p-3 my-[50px]">
         <div className="mb-4">
           <label htmlFor="title" className="block text-sm font-medium text-gray-700">Title</label>
           <input

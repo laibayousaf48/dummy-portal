@@ -63,4 +63,7 @@
   transition: opacity 1s ease-in-out;
   /* Adjust the duration as needed */
 }
-
+.table-responsive{
+  overflow-x: auto;
+  background-color: red;
+}

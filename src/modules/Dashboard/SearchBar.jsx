@@ -1,15 +1,16 @@
 import React from "react";
-// import { SearchIcon } from "@heroicons/react/outline"; // Assuming you have the SearchIcon component from Heroicons
+//  import { IoSearchSharp } from 'react-icons-io5';
+
 
 function SearchBar() {
   return (
-    <div className="flex items-center border rounded-md">
+    <div className="flex items-center border rounded-lg p-2 bg-white w-[30vw]">
       <input
         type="text"
         placeholder="Search..."
         className="outline-none"
       />
-      {/* <SearchIcon className="w-5 h-5 text-gray-400" /> */}
+      {/* <IoSearchSharp className="w-5 h-5 text-gray-400" /> */}
     </div>
   );
 }

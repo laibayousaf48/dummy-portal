@@ -6,7 +6,7 @@ import AppImages from "../../assets/images/index.js";
 import Chart from "chart.js/auto";
 import { Line } from "react-chartjs-2";
 import { useEffect, useState } from "react";
-// import SearchBar from'./SearchBar.jsx'
+import SearchBar from'./SearchBar.jsx'
 function DashboardScreen() {
   const [graphData, setGraphData] = useState(null);
   const [data, setData] = useState([]);
@@ -125,7 +125,12 @@ const formatData = graphData?.audience.map((item) => item[1]);
 
   return (
     <DashboardTemplate pageTitle={"Dashboard"}>
+
       <div className="flex flex-wrap items-center">
+        <div className="absolute flex justify-around ml-20 top-0">
+          <div></div>
+        <SearchBar />
+        </div>
         {/* <StatCard
           icon={<IoPersonOutline color={"#24ACE3"} size={"20px"} />}
           number={932}
@@ -171,37 +176,34 @@ const formatData = graphData?.audience.map((item) => item[1]);
             </div>
           </div>
         </div> */}
-        {/* <SearchBar /> */}
-<div class="container px-5 py-5 mx-auto bg-white">
+    
+{/* <div class="container px-5 py-5 mx-auto flex-wrap bg-white">
     <div class="flex justify-around text-left">
-        <div class="p-4 w-1/3 border-r-2 border-gray-300">
-            {/* <h2 class="title-font font-medium text-3xl text-gray-900">{loading ?("Loading"):({apiInfo && apiInfo.total_scans})}</h2> */}
-            <h2 className="title-font font-medium text-3xl text-gray-900">
-             {/* {loading ? "Loading" : null} */}
+        <div class="p-4 border-r-2 border-gray-300 sm:w-1/4 w-1/2">      
+            <h2 className="title-font font-medium text-3xl text-gray-900 ">
              {apiInfo && apiInfo.total_scans}
            </h2>
-
             <div className='flex flex-inline flex-row justify-between'>
             <p class="leading-relaxed text-left text-xs text-gray-600">QR code scans &nbsp;</p>
             <p><a href="#" className='underline-offset-auto text-xs text-blue-500 font-light'>Report</a></p>
             </div>
         </div>
-        <div class="p-4 w-1/3 ml-8 border-r-2 border-gray-300">
+        <div class="p-4 ml-8 border-r-2 border-gray-300 sm:w-1/4 w-1/2">
             <h2 class="title-font font-medium text-3xl text-gray-900">{apiInfo && apiInfo.link_clicked}</h2>
             <div className='flex flex-inline flex-row justify-between'>
             <p class="leading-relaxed text-left text-xs text-gray-600">Links clicked &nbsp;</p>
             <a href="#" className='underline-offset-auto text-xs text-blue-500 font-light'>Report</a>
             </div>
         </div>
-        <div class="p-4 w-1/3 ml-8 border-r-2 border-gray-300">
+        <div class="p-4  ml-8 border-r-2 border-gray-300 sm:w-1/4 w-1/2">
             <h2 class="title-font font-medium text-3xl text-gray-900">{apiInfo && apiInfo.active_users}</h2>
             <div className='flex flex-inline flex-row justify-between'>
             <p class="leading-relaxed text-left text-xs text-gray-600">Active users &nbsp;</p>
-           <a href="#" className='underline-offset-auto text-xs text-blue-500 font-light'>Report</a>
+            <a href="#" className='underline-offset-auto text-xs text-blue-500 font-light'>Report</a>
             </div>
         </div>
 
-        <div class="p-4 w-1/3 ml-8">
+        <div class="p-4 ml-8 sm:w-1/4 w-1/2">
             <h2 class="title-font font-medium text-3xl text-gray-900">{apiInfo && apiInfo.earnings}</h2>
             <div className='flex flex-inline flex-row justify-between'>
             <p class="leading-relaxed text-left text-xs text-gray-600">Earnings &nbsp;</p>
@@ -209,12 +211,50 @@ const formatData = graphData?.audience.map((item) => item[1]);
             </div>
         </div>
     </div>
-</div>
+</div> */}
+
+
+<section class="text-gray-600 body-font bg-white w-screen">
+  <div class="container px-5 py-24 mx-auto">
+    <div class="flex flex-wrap -m-4">
+      <div class="p-4 sm:w-1/4 w-1/2 border-r-2 border-gray-300">
+      <h2 className="title-font font-medium text-3xl text-gray-900 ">
+             {apiInfo && apiInfo.total_scans}
+           </h2>
+            <div className='flex flex-inline flex-row justify-between'>
+            <p class="leading-relaxed text-left text-xs text-gray-600">QR code scans &nbsp;</p>
+            <p><a href="#" className='underline-offset-auto text-xs text-blue-500 font-light'>Report</a></p>
+            </div>
+      </div>
+      <div class="p-4 sm:w-1/4 w-1/2 border-r-2 border-gray-300">
+      <h2 class="title-font font-medium text-3xl text-gray-900">{apiInfo && apiInfo.link_clicked}</h2>
+            <div className='flex flex-inline flex-row justify-between'>
+            <p class="leading-relaxed text-left text-xs text-gray-600">Links clicked &nbsp;</p>
+            <a href="#" className='underline-offset-auto text-xs text-blue-500 font-light'>Report</a>
+            </div>
+      </div>
+      <div class="p-4 sm:w-1/4 w-1/2 border-r-2 border-gray-300">
+      <h2 class="title-font font-medium text-3xl text-gray-900">{apiInfo && apiInfo.active_users}</h2>
+            <div className='flex flex-inline flex-row justify-between'>
+            <p class="leading-relaxed text-left text-xs text-gray-600">Active users &nbsp;</p>
+            <a href="#" className='underline-offset-auto text-xs text-blue-500 font-light'>Report</a>
+            </div>
+      </div>
+      <div class="p-4 sm:w-1/4 w-1/2">
+      <h2 class="title-font font-medium text-3xl text-gray-900">{apiInfo && apiInfo.earnings}</h2>
+            <div className='flex flex-inline flex-row justify-between'>
+            <p class="leading-relaxed text-left text-xs text-gray-600">Earnings &nbsp;</p>
+            <a href="#" className='underline-offset-auto text-xs text-blue-500 font-light'>Report</a>
+            </div>
+      </div>
+    </div>
+  </div>
+</section>
 
 
 <div class="lg:w-full mx-auto bg-white mt-0 pt-0">
      
-      <div class="flex flex-wrap px-10 py-8">
+      <div class="flex flex-wrap px-10 py-8 md:w[30vw]">
         <div className="text-[14px] text-[#333333] font-semibold text-xl mb-4">Total Audience</div>
         {/* <div class="px-2 w-full mb-4 border border-gray-300  bg-white"> */}
           <div class="flex flex-wrap w-full bg-white sm:py-24 py-4 sm:px-10 px-6 relative border border-gray-300">
@@ -226,8 +266,8 @@ const formatData = graphData?.audience.map((item) => item[1]);
      
         <div className="text-[14px] text-[#333333] font-semibold text-xl mb-4 mt-8">Earning</div>
         <div class="px-2 w-full mb-4 border border-gray-300 ">
-          <div class="flex flex-wrap w-full bg-white sm:py-24 py-16 sm:px-10 px-6 relative">
-            <div class="text-center relative z-10 w-full">
+          <div class="flex flex-wrap w-full bg-white sm:py-24 py-4 sm:px-10 px-6 relative">
+            <div class="text-center relative w-full">
               {/* <h2 class="text-xl text-gray-900 font-medium title-font mb-2">Graph</h2> */}
               <Line data={graph} />
             </div>
@@ -266,7 +306,7 @@ const formatData = graphData?.audience.map((item) => item[1]);
           <tbody>
           <div className=" opacity-30 my-2"></div>
         {data.map((item, index) => (
-          <div className="flex flex-row my-[2px] w-full pl-12 pr-12 mb-4" key={index}>
+          <div className="flex flex-row my-[2px] w-full pl-12 pr-12 mb-4 border-b" key={index}>
             <div className="text-[14px] text-[#333333]  w-[50%]">
              {/* <img src={item.photo_urls} alt="Business" className="w-20 h-20 object-cover rounded-md" /> */}
             {item.photo_urls && item.photo_urls !== "NA" ?(

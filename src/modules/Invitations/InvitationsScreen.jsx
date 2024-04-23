@@ -4,26 +4,41 @@ import Modal from "react-modal";
 import { useState } from 'react';
 import TextInputField from "../../components/basic/TextInputField.jsx";
 
+// import BootstrapTable from 'react-bootstrap-table-next';
+// import { CompactTable } from '@table-library/react-table-library/compact';
+import DataTable from 'datatables.net-dt';
+// import 'datatables.net-responsive-dt';
+let table = new DataTable('#myTable',{
+  responsive: true
+});
 Modal.setAppElement('#root');
 function Invitations(){
-    // const data = [
-    //       { time: "10:36 am", message: "promotions ads created" },
-    //       { time: "09:16 am", message: "new messages" },
-    //       { time: "10:36 am", message: "promotions ads created" },
-    //       { time: "09:16 am", message: "new messages" },
-    //       { time: "10:36 am", message: "promotions ads created" },
-    //       { time: "09:16 am", message: "new messages" },
-    //     ];
+    const data = [
+          {phone:"13463454939", time: "10:36 am", message: "promotions ads created" },
+          {phone:"23463454939", time: "09:16 am", message: "new messages" },
+          {phone:"33463454939", time: "10:36 am", message: "promotions ads created" },
+          {phone:"43463454939", time: "09:16 am", message: "new messages" },
+          {phone:"53463454939", time: "10:36 am", message: "promotions ads created" },
+          {phone:"63463454939", time: "09:16 am", message: "new messages" },
+        ];
+        const columns = [
+          { dataField: 'phone', text: 'phone' },
+          { dataField: 'time', text: 'Time' },
+          { dataField: 'message', text: 'message' },
+        ];
+
     const modalStyle = {
         content: {
           top: "50%",
-          width: "488px",
+          maxWidth: "488px",
+          width: "100vw",
           left: "50%",
           right: "auto",
           bottom: "auto",
           marginRight: "-50%",
           transform: "translate(-50%, -50%)",
-          maxHeight: "100vh",
+          // maxHeight: "100vh",
+          height: "400px",
           overflowY: "auto",
           borderRadius: "18px",
           position: "relative"
@@ -33,6 +48,7 @@ function Invitations(){
         },
       };
 const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+const [isModalOpen, setIsModalOpen] = useState(false);
 const closeModal = () => {
     setIsAddModalOpen(false);
   };
@@ -45,39 +61,38 @@ const closeModal = () => {
     phone_no: "",
 
   });
-//   const requiredFields = [
-//     "phone_no"
-//   ];
+
   const [isInputFocused, setIsInputFocused] = useState(false);
   const handleInputFocus = () => {
     setIsInputFocused(true);
   };
     return(
         <DashboardTemplate pageTitle={"Invitations"}>
-        <div className='bg-white'>
-        <div>
+        {/* <div className='max-w-md mx-auto bg-white shadow-md overflow-hidden md:max-w-2xl'> */}
+        {/* <div> */}
+        <div className='w-[75vw] bg-white'>
+        <div className='md:flex'>
         <table className='w-full pr-4'>
           <thead className='border-b-2'>
-            <tr className=''>
-              <th>Title</th>
+            <tr className='flex flex-row justify-around py-4 '>
+              <th>Phone</th>
               <th>Time</th>
               <th>Status</th>
             </tr>
-            {/* <hr /> */}
           </thead>
           <tbody>
-            {/* {data.map(item => (
-              <tr key={item.id} className='border-b-2 border-slate-200'>
-                <td className={'w-[15%] ' + tdClasses}>{formatTimestamp(item.updated_at)}</td>
-                <td className={'w-[20%] ' + (hasUrduCharacters(item.title) ? "ur" : "") + " " + tdClasses}>{item.title}</td>
-                <td className={'w-[5%] ' + tdClasses}>{item.audience_count}</td>
-                <td className={'w-[20%] ' + (hasUrduCharacters(item.title) ? "ur" : "") + " " + tdClasses}>{item.body}</td>
-                <td className={tdClasses}>{item.content_type}</td>
-              </tr>
-            ))} */}
-          </tbody>
+        {data.map((item, index) => (
+          <tr key={index} className='flex flex-row justify-around text-center border-b py-4 text-gray-500'>
+            <td className='w-[33%]'>NA</td>
+            <td className='w-[33%]'>{item.time}</td>
+            <td className='w-[33%]'>{item.message}</td>
+          </tr>
+        ))}
+      </tbody>
         </table>
         </div>
+
+        {/* <DataTable columns={columns} data={data} />; */}
         <div>
         <button className='absolute top-0 right-0 m-4 p-2 bg-blue-500 text-white rounded'  onClick={(e) => {
                   setIsAddModalOpen(true);
@@ -97,16 +112,16 @@ const closeModal = () => {
           </button>
                 <form
                 //   onSubmit={handleSubmit}
-                  className="max-w-md mx-auto my-2 w-full h-[80vh] justify-between flex flex-col"
+                  className="max-w-md mx-auto my-2 w-full h-[40vh] justify-between flex flex-col"
                 >
                     <div>
                       <div className="text-[18px] text-[#24ACE3] text-center font-bold">
                         Send Invitation
                       </div>
-                      <div className="border-[1px] border-[#333333] opacity-20 my-2"></div>
+                      <div className="border-[1px] border-[#333333] opacity-20 mt-2"></div>
                       <div className="mt-[25px]">
                         <TextInputField
-                          type={"text"}
+                          type={"tel"}
                           style={{
                             width: "w-full",
                             labelFontSize: "text-[14px]",
@@ -128,26 +143,6 @@ const closeModal = () => {
                           isRequired={true}
                           placeholder={"03*********"}
                         />
-
-                        {/* <TextInputField
-                          type={"text"}
-                          style={{
-                            width: "w-full",
-                            labelFontSize: "text-[27px]",
-                            inputFontSize: "text-[22px]",
-                          }}
-                          label="Message / پیغام"
-                          onChange={(e) => {
-                            setFormFields((old) => ({
-                              ...old,
-                              message: e?.target?.value,
-                            }));
-                          }}
-                          value={formFields.message}
-                          error={formFields.message ? null : ""}
-                          isRequired={true}
-                          placeholder={"Message"}
-                        /> */}
                       </div>
                     </div>
                     <div>
@@ -162,6 +157,8 @@ const closeModal = () => {
                     </div>
                 </form>
               </Modal>
+
+             
       </div>
        </DashboardTemplate>
     )

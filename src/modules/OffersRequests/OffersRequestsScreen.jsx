@@ -16,7 +16,8 @@ function OffersRequestsScreen() {
   const modalStyle = {
     content: {
       top: "50%",
-      width: "488px",
+      maxWidth: "488px",
+      width: "100vw",
       left: "50%",
       right: "auto",
       bottom: "auto",
@@ -374,7 +375,7 @@ useEffect(() => {
             >
               ACTIVE
             </Tab>
-            <Tab
+            {/* <Tab
               className={
                 "border-0 bg-transparent cursor-pointer outline-none py-2 px-2 text-slate-500"
               }
@@ -387,7 +388,7 @@ useEffect(() => {
               }
             >
               EXPIRED
-            </Tab>
+            </Tab> */}
           </TabList>
 
           <TabPanel>
@@ -463,15 +464,14 @@ useEffect(() => {
     </div>
   </div>
 </div></div> */}
- <div className="container px-5 py-12 mx-auto flex flex-wrap">
+ <div className="container pr-5 py-12 mx-auto flex flex-wrap">
       {offerData.map((offer, index) => (
         <div key={index} className="flex flex-wrap -m-4 mt-1 w-5/6">
           <div className="p-4 lg:w-full md:w-full sm:justify-center">
             <div className="flex border border-gray-400  sm:flex-row flex-col">
               <div className='flex-[1_1_25%] flex-grow inline-flex items-center justify-center'>
-                {/* <img src={offer.query_messages[1].content} alt="Image" className='block mx-auto object-contain p-2' /> */}
                 {offer.query_messages && offer.query_messages.length > 1 ? (
-            <img src={offer.query_messages[1].content} alt="Image" className='block mx-auto object-contain'  />
+            <img src={offer.query_messages[1].content} alt="Image" className='block mx-auto object-contain'/>
             ) : (
            <svg
            fill="none"
@@ -486,7 +486,6 @@ useEffect(() => {
            <circle cx="12" cy="7" r="4"></circle>
          </svg>
          )}
-
               </div>
               <div className="flex-[1_1_50%] flex-grow sm:justify-center p-2">
                 <h2 className="text-gray-900 text-lg title-font font-medium mb-1 mt-3 text-left">{offer.business_name}</h2>
@@ -505,8 +504,8 @@ useEffect(() => {
                       <td className="p-2 font-normal text-3xl text-center">{offer.__v}</td>
                     </tr>
                     <tr>
-                      <td className="p-2 text-left text-lg"><strong className='font-normal text-3xl'>{offer.calls}</strong><br /> Calls</td>
-                      <td className="p-2 text-left text-lg"><strong className='font-normal text-3xl'>{offer.distance}</strong><br />Distance(m)</td>
+                      <td className="p-2 text-left text-lg"><strong className='font-normal text-3xl'>{offer.radius}</strong><br /> Calls</td>
+                      <td className="p-2 text-center text-lg"><strong className='font-normal text-3xl'>{offer.radius}</strong><br />Distance(m)</td>
                     </tr>
                   </table>
                 </div>

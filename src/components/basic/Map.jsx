@@ -114,7 +114,7 @@ function MapContainer(props) {
             body: JSON.stringify({ lat, lng }),
           });
           const data = await response.json();
-           console.log("MAp Response", response)
+           console.log("Map Response", response)
         } catch (error) {
           console.error('Error fetching data:', error);
         }
@@ -122,23 +122,31 @@ function MapContainer(props) {
     }      
 
   return (
-    <div style={{ width: '50%', height: '400px' }}>
+    <div style={{  width: '50%', height: '400px', maxWidth: '600px', maxHeight: '600px', display:'block'}}>
       <Map
         google={props.google}
         zoom={2}
         initialCenter={{ lat: 0, lng: 0 }}
         onClick={handleMapClick}
+        // style={{ width: '20%', height: '50%', }}
+        style={{
+          width: '20%', 
+          height: '50%', 
+          '@media (max-width: 768px)': { 
+            width: '100vw', 
+            height: '30vh', 
+          },
+        }}
       >
         {markerPosition && <Marker position={markerPosition} />}
       </Map>
-      <p>Select a location on the map</p>
-      {markerPosition && (
+      {/* {markerPosition && (
         <div>
           <p>Selected Location:</p>
           <p>Latitude: {markerPosition.lat}</p>
           <p>Longitude: {markerPosition.lng}</p>
         </div>
-      )}
+      )} */}
     </div>
   );
 }
