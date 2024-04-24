@@ -623,8 +623,8 @@ console.log(business_id)
                     <div className="w-12 h-1 bg-gray-500 rounded mt-2 mb-4"></div>
                   </div>
                   <button onClick={handleIconClick} className="focus:outline-none">Edit Profile Picture</button>
-                      <div className="mt-8 container overflow-hidden sm:w-[100vw]">
-                        <Map/>
+                      <div className="mt-8 overflow-hidden sm:w-[100vw] sm:h-[30vh]" style={{ width: '100%', height: '20%' }}>
+                        <Map />
                       </div>
                 </div>
                 <div className="sm:w-2/3 sm:pl-8 sm:py-8 sm:border-l border-gray-200 sm:border-t-0 border-t mt-4 pt-4 sm:mt-0 text-center sm:text-left">

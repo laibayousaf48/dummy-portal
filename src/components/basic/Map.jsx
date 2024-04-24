@@ -122,7 +122,7 @@ function MapContainer(props) {
     }      
 
   return (
-    <div style={{  width: '50%', height: '400px', maxWidth: '600px', maxHeight: '600px', display:'block'}}>
+    <div style={{ width: '50%', height: '50%', maxWidth: '600px', maxHeight: '600px', display:'block'}}>
       <Map
         google={props.google}
         zoom={2}
@@ -133,8 +133,8 @@ function MapContainer(props) {
           width: '20%', 
           height: '50%', 
           '@media (max-width: 768px)': { 
-            width: '100vw', 
-            height: '30vh', 
+            width: '100%', 
+            height: '100%', 
           },
         }}
       >

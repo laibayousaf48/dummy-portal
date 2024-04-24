@@ -128,7 +128,7 @@ const formatData = graphData?.audience.map((item) => item[1]);
 
       <div className="flex flex-wrap items-center">
         <div className="absolute flex justify-around ml-20 top-0">
-          <div></div>
+          <div>&nbsp;&nbsp;&nbsp;</div>
         <SearchBar />
         </div>
         {/* <StatCard
@@ -214,8 +214,8 @@ const formatData = graphData?.audience.map((item) => item[1]);
 </div> */}
 
 
-<section class="text-gray-600 body-font bg-white w-screen">
-  <div class="container px-5 py-24 mx-auto">
+{/* <section class="text-gray-600 body-font bg-white w-screen"> */}
+  <div class="container px-5 py-24 mx-auto bg-white">
     <div class="flex flex-wrap -m-4">
       <div class="p-4 sm:w-1/4 w-1/2 border-r-2 border-gray-300">
       <h2 className="title-font font-medium text-3xl text-gray-900 ">
@@ -249,12 +249,12 @@ const formatData = graphData?.audience.map((item) => item[1]);
       </div>
     </div>
   </div>
-</section>
+{/* </section> */}
 
 
 <div class="lg:w-full mx-auto bg-white mt-0 pt-0">
      
-      <div class="flex flex-wrap px-10 py-8 md:w[30vw]">
+      <div class="flex flex-wrap px-10 py-8 ">
         <div className="text-[14px] text-[#333333] font-semibold text-xl mb-4">Total Audience</div>
         {/* <div class="px-2 w-full mb-4 border border-gray-300  bg-white"> */}
           <div class="flex flex-wrap w-full bg-white sm:py-24 py-4 sm:px-10 px-6 relative border border-gray-300">
