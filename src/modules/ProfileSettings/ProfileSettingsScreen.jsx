@@ -479,6 +479,10 @@ function ProfileSettingsScreen() {
     business_phone: "",
     address: "",
     category: "",
+    account_holder_name: "",
+    account_number: "",
+    bank_code: "",
+    branch_code: "",
   });
   const [formErrors, setFormErrors] = useState({
     email: "",
@@ -496,9 +500,11 @@ console.log(business_id)
         const response = await axios.get(`https://crm-lara-mongo-7azts5zmra-uc.a.run.app/businessportal/business-profile?business_id=${business_id}`);
         const { user, business } = response.data;
         const { email} = user;
-        const { phone: business_number, name: business_name, category, address, avatar_url } = business;
-        setBusinessInfo({ business_name, business_number, email, address, category, avatar_url });
-        setFormFields({ business_name, business_phone: business_number, email, address, category });
+        const { phone: business_number, name: business_name, category, address, avatar_url, bank_details } = business;
+        setBusinessInfo({ business_name, business_number, email, address, category, avatar_url, bank_details });
+        // console.log("bank details", bank_details);
+        const {account_holder_name, account_number, bank_code, branch_code } = bank_details;
+        setFormFields({ business_name, business_phone: business_number, email, address, category, account_holder_name, account_number, bank_code, branch_code });
         console.log("response for get request",response)
       } catch (error) {
         console.error('API error:', error);
@@ -623,8 +629,8 @@ console.log(business_id)
                     <div className="w-12 h-1 bg-gray-500 rounded mt-2 mb-4"></div>
                   </div>
                   <button onClick={handleIconClick} className="focus:outline-none">Edit Profile Picture</button>
-                      <div className="mt-8 overflow-hidden sm:w-[100vw] sm:h-[30vh]" style={{ width: '100%', height: '20%' }}>
-                        <Map />
+                      <div className="mt-8 container overflow-hidden " style={{width: '100%', height: '50%'}}>
+                        <Map/>
                       </div>
                 </div>
                 <div className="sm:w-2/3 sm:pl-8 sm:py-8 sm:border-l border-gray-200 sm:border-t-0 border-t mt-4 pt-4 sm:mt-0 text-center sm:text-left">
@@ -632,7 +638,7 @@ console.log(business_id)
                     <div className="w-full h-screen pt-5 mt-10">
                       <form onSubmit={handleSubmit} className="max-w-md mx-auto my-5 gap-2 py-[3%] h-[70vh] justify-center flex flex-col">
                         {/* <div className="text-[40px] text-[#333333] mt-[16px] justify-center text-center">Update Profile</div> */}
-                        <div className="mt-[0]">
+                        <div className="mt-[16px]">
                           <TextInputField
                             type={"email"}
                             style={{ width: "w-full", labelFontSize: "text-[27px]", inputFontSize: "text-[22px]" }}
@@ -694,8 +700,60 @@ console.log(business_id)
                             placeholder={"Category"}
                           />
                         </div>
+                        {/* <div>Bank Details</div> */}
+                        <div className="mt-[0]">
+                          <TextInputField
+                            type="text"
+                            style={{ width: "w-full", labelFontSize: "text-[27px]", inputFontSize: "text-[22px]" }}
+                            label="Account Holder Name"
+                            onChange={(e) => setFormFields({ ...formFields, account_holder_name: e.target.value })}
+                            value={formFields.account_holder_name}
+                            error={formErrors.account_holder_name}
+                            isRequired={true}
+                            placeholder={"Account holder name"}
+                          />
+                        </div>
+                        <div className="mt-[0]">
+                          <TextInputField
+                            type={"number"}
+                            style={{ width: "w-full", labelFontSize: "text-[27px]", inputFontSize: "text-[22px]" }}
+                            label="Account Number"
+                            className="mb-0"
+                            onChange={(e) => setFormFields({ ...formFields, account_number: e.target.value })}
+                            value={formFields.account_number}
+                            error={formErrors.account_number}
+                            isRequired={true}
+                            placeholder={"*******"}
+                          />
+                        </div>
+                        <div className="mt-[0]">
+                          <TextInputField
+                            type={"number"}
+                            style={{ width: "w-full", labelFontSize: "text-[27px]", inputFontSize: "text-[22px]" }}
+                            label="Bank Code"
+                            className="mb-0"
+                            onChange={(e) => setFormFields({ ...formFields, bank_code: e.target.value })}
+                            value={formFields.bank_code}
+                            error={formErrors.bank_code}
+                            isRequired={true}
+                            placeholder={"*******"}
+                          />
+                        </div>
+                        <div className="mt-[0]">
+                          <TextInputField
+                            type={"number"}
+                            style={{ width: "w-full", labelFontSize: "text-[27px]", inputFontSize: "text-[22px]" }}
+                            label="Branch Code"
+                            className="mb-0"
+                            onChange={(e) => setFormFields({ ...formFields, branch_code: e.target.value })}
+                            value={formFields.branch_code}
+                            error={formErrors.branch_code}
+                            isRequired={true}
+                            placeholder={"*******"}
+                          />
+                        </div>
                         <p className="my-1 text-sm text-primary pl-4">{error}</p>
-                        <button className="w-full h-[56px] bg-[#1FA3DB] text-[16px] p-4 rounded-md text-white hover:bg-[#a2dbf3]">
+                        <button className="w-full h-[56px] bg-[#1FA3DB] text-[16px] p-4 rounded-md text-white hover:bg-[#a2dbf3] mb-8">
                            Update
                           </button>
                       </form>

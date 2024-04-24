@@ -86,7 +86,21 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import GoogleMapReact from 'google-map-react'; 
-
+const CustomMarker = ({ lat, lng }) => (
+  <div style={{
+    width: '30px',
+    height: '30px',
+    backgroundColor: 'red',
+    borderRadius: '50%',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    color: 'white',
+    fontWeight: 'bold',
+  }}>
+    M
+  </div>
+);
 function Map(props) {
   const [markerPosition, setMarkerPosition] = useState(null);
   const business_id = localStorage.getItem("Business ID");
@@ -94,6 +108,7 @@ function Map(props) {
   useEffect(() => {
     const fetchData = async () => {
       try {
+        // debugger;
         const response = await axios.get(`https://crm-lara-mongo-7azts5zmra-uc.a.run.app/businessportal/business-profile?business_id=${business_id}`);
         const { user } = response.data;
         const { location } = user;
@@ -128,20 +143,19 @@ function Map(props) {
       console.error('Error fetching data:', error);
     }
   };
-
   return (
-    <div style={{ width: '20%', height: '20%', maxWidth: '600px', maxHeight: '600px', display: 'block' }}>
+    <div style={{ width: '100%', height: '100%', maxWidth: '800px', maxHeight: '800px', display: 'block' }}>
       <GoogleMapReact
         bootstrapURLKeys={{ key: 'AIzaSyBxh8DT3s64AR1py7V5KHuHm7kvlM3D5sE' }} 
-        center={markerPosition ? markerPosition : { lat: 0, lng: 0 }}
-        zoom={2}
+        center={markerPosition}
+        zoom={11}
         onClick={handleMapClick}
-        style={{
-          width: '20%',
-          height: '50%',
-        }}
+        // style={{
+        //   width: '20%',
+        //   height: '50%',
+        // }}
       >
-        {/* {markerPosition && <Marker lat={markerPosition.lat} lng={markerPosition.lng} />} */}
+        {markerPosition && <CustomMarker lat={markerPosition?.lat} lng={markerPosition?.lng} />}
       </GoogleMapReact>
     </div>
   );

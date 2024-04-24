@@ -39,7 +39,7 @@ function TextInputField({
     }
   };
   return (
-    <div className={`my-4 ${style.wrapper}`}>
+    <div className={`my-2 ${style.wrapper}`}>
       {label && (
         <label
           htmlFor={id}
