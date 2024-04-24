@@ -11,7 +11,8 @@ import axios from "axios";
 import { LambdaAPI } from "../../LambdaAPI.js";
 import firebase_service from "../../utils/firebase_service.js";
 import { GrUploadOption } from "react-icons/gr";
-
+import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer, toast } from 'react-toastify';
 function OffersRequestsScreen() {
   const modalStyle = {
     content: {
@@ -157,8 +158,12 @@ const handleSubmit = async(e) => {
     alert(`Please fill in the following fields: ${emptyFields.join(", ")}`);
     return;
   }
-  debugger;
+  // debugger;
   console.log("Imagesss",imageurls)
+  const data = localStorage.getItem("User");
+  const phone = JSON.parse(data);
+  const phone_no = phone.username;
+  console.log("Response phone", phone_no);
   const res = await fetch("https://rogvftzrsuaealt3f7htqchmfa0zfumz.lambda-url.eu-west-1.on.aws/create-post?key=oc.fc8ab25facba44eb959939ad6d3f8c6a", {
     method: 'POST',
     headers: {
@@ -170,7 +175,8 @@ const handleSubmit = async(e) => {
         location: formFields.location,
         lat: formFields.latitude,
         lng: formFields.longitude,
-        // images: imageurls,
+        from: phone_no,
+        radius: 5,
         messages: [
           { type: 'text', content: `${formFields.message}` },
           { type: 'image', content: `${imageurls}` }
@@ -181,11 +187,13 @@ const handleSubmit = async(e) => {
     .then((res) => {
       if (res.data?.status == 200) {
         console.log("response", res);
+        toast.success("Your Post has been Published Successfully!")
       } else {
         throw new Error(
           res.data?.message ?? "Error in Publishing your Post"
         );
       }
+      toast.error("Error in Publishing Your Post")
     })
     .catch((err) => {
       console.log(err);
@@ -896,6 +904,7 @@ useEffect(() => {
             </div>
           </TabPanel>
         </Tabs>
+        <ToastContainer />
       </div>
     </DashboardTemplate>
   );

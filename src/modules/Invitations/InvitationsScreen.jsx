@@ -3,7 +3,8 @@ import DashboardTemplate from "../../components/Templates/DashboardTemplate.jsx"
 import Modal from "react-modal";
 import { useState } from 'react';
 import TextInputField from "../../components/basic/TextInputField.jsx";
-
+import Chart from "chart.js/auto";
+import { Bar } from "react-chartjs-2";
 // import BootstrapTable from 'react-bootstrap-table-next';
 // import { CompactTable } from '@table-library/react-table-library/compact';
 import DataTable from 'datatables.net-dt';
@@ -13,6 +14,18 @@ let table = new DataTable('#myTable',{
 });
 Modal.setAppElement('#root');
 function Invitations(){
+  const bar_data = {
+    labels: ["Delivered", "Accepted", "Rejected"],
+    datasets: [
+      {
+        label: "Notifications Status",
+        data: [65, 59, 80, 81, 56, 55, 40],
+        backgroundColor: "rgba(255, 99, 132, 0.2)",
+        borderColor: "rgba(255, 99, 132, 1)",
+        borderWidth: 1,
+      },
+    ],
+  };
     const data = [
           {phone:"13463454939", time: "10:36 am", message: "promotions ads created" },
           {phone:"23463454939", time: "09:16 am", message: "new messages" },
@@ -70,9 +83,16 @@ const closeModal = () => {
         <DashboardTemplate pageTitle={"Invitations"}>
         {/* <div className='max-w-md mx-auto bg-white shadow-md overflow-hidden md:max-w-2xl'> */}
         {/* <div> */}
-        <div className='w-[75vw] bg-white'>
-        <div className='md:flex'>
-        <table className='w-full pr-4'>
+        {/* <Bar data={bar_data} /> */}
+        <div className='w-[75vw] bg-white mt-12'>
+          <div className='p-8'>
+            <div className='text-3xl '>Invitations Status</div>
+            <hr className='my-4' />
+          <Bar data={bar_data} />
+          </div>
+          <div className='p-8 pb-0 text-3xl '>Invitations Data</div>
+        <div className='md:flex p-8 '>
+        <table className='w-full pr-4 border-2 border-gray-300'>
           <thead className='border-b-2'>
             <tr className='flex flex-row justify-around py-4 '>
               <th>Phone</th>
@@ -81,7 +101,7 @@ const closeModal = () => {
             </tr>
           </thead>
           <tbody>
-        {data.map((item, index) => (
+        {data?.map((item, index) => (
           <tr key={index} className='flex flex-row justify-around text-center border-b py-4 text-gray-500'>
             <td className='w-[33%]'>NA</td>
             <td className='w-[33%]'>{item.time}</td>
@@ -115,9 +135,9 @@ const closeModal = () => {
                   className="max-w-md mx-auto my-2 w-full h-[40vh] justify-between flex flex-col"
                 >
                     <div>
-                      <div className="text-[18px] text-[#24ACE3] text-center font-bold">
+                      {/* <div className="text-[18px] text-[#24ACE3] text-center font-bold">
                         Send Invitation
-                      </div>
+                      </div> */}
                       <div className="border-[1px] border-[#333333] opacity-20 mt-2"></div>
                       <div className="mt-[25px]">
                         <TextInputField

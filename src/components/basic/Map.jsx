@@ -130,7 +130,7 @@ function Map(props) {
 
     try {
       const business_id = localStorage.getItem("Business ID");
-      const response = await fetch(`https://crm-lara-mongo-7azts5zmra-uc.a.run.app/businessportal/business-profile${business_id}`, {
+      const response = await fetch(`https://crm-lara-mongo-7azts5zmra-uc.a.run.app/businessportal/business-view-logs?date=&business_id=${business_id}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

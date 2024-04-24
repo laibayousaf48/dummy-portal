@@ -502,7 +502,7 @@ console.log(business_id)
         const { email} = user;
         const { phone: business_number, name: business_name, category, address, avatar_url, bank_details } = business;
         setBusinessInfo({ business_name, business_number, email, address, category, avatar_url, bank_details });
-        // console.log("bank details", bank_details);
+        console.log("bank details", bank_details);
         const {account_holder_name, account_number, bank_code, branch_code } = bank_details;
         setFormFields({ business_name, business_phone: business_number, email, address, category, account_holder_name, account_number, bank_code, branch_code });
         console.log("response for get request",response)

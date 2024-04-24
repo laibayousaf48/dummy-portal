@@ -6,7 +6,7 @@ import AppImages from "../../assets/images/index.js";
 import Chart from "chart.js/auto";
 import { Line } from "react-chartjs-2";
 import { useEffect, useState } from "react";
-import SearchBar from'./SearchBar.jsx'
+// import SearchBar from'./SearchBar.jsx'
 function DashboardScreen() {
   const [graphData, setGraphData] = useState(null);
   const [data, setData] = useState([]);
@@ -127,10 +127,10 @@ const formatData = graphData?.audience.map((item) => item[1]);
     <DashboardTemplate pageTitle={"Dashboard"}>
 
       <div className="flex flex-wrap items-center">
-        <div className="absolute flex justify-around ml-20 top-0">
+        {/* <div className="absolute flex justify-around ml-20 top-0">
           <div>&nbsp;&nbsp;&nbsp;</div>
         <SearchBar />
-        </div>
+        </div> */}
         {/* <StatCard
           icon={<IoPersonOutline color={"#24ACE3"} size={"20px"} />}
           number={932}

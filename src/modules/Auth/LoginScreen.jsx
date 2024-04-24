@@ -64,9 +64,11 @@ function LoginScreen() {
         const business_id = res.data.data.business._id;
         console.log(business_id);
         const data = res.data.data.business
+        const userData = res.data.data.user;
        console.log("Response", res.data.data.business);
         localStorage.setItem("Business ID", business_id);
-         localStorage.setItem("Response", JSON.stringify(data))
+         localStorage.setItem("Response", JSON.stringify(data));
+         localStorage.setItem("User", JSON.stringify(userData));
       } else {
         throw new Error(res.data?.message ?? "Error logging you in! Please try again")
       }
