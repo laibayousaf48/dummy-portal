@@ -242,7 +242,11 @@ const handleSubmit = async(e) => {
 useEffect(() => {
   const fetchData = async () => {
     try {
-      const response = await fetch('https://crm-lara-mongo-7azts5zmra-uc.a.run.app/businessportal/offers?user_id=65e867611f2cadccb9922295');
+      const userData = localStorage.getItem("User");
+      const user_id = JSON.parse(userData);
+      const u_id = user_id._id;
+      console.log("user is", user_id._id)
+      const response = await fetch(`https://crm-lara-mongo-7azts5zmra-uc.a.run.app/businessportal/offers?user_id=${u_id}`);
       const data = await response.json();
       console.log("graph data", data.offers);
       setOfferData(data.offers);
