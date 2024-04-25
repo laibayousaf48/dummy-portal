@@ -33,14 +33,14 @@ import DemographicsScreen from './modules/Demographics/DemographicsScreen';
 import NotificationsScreen from './modules/Notifications/NotificationsScreen';
 import InvitationsScreen from './modules/Invitations/InvitationsScreen';
 import Form from './modules/Notifications/Form';
-import OTP from './modules/Auth/OTP.jsx';
+import MessageVerifyScreen from './modules/Auth/MessageVerifyScreen.jsx';
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <BrowserRouter>
       <AuthContextProvider>
         <Routes>
-            <Route path="/otp" element={<OTP />} />
+            <Route path="/message/verify/:number" element={<MessageVerifyScreen />} />
             <Route path="/verify/:number" element={<VerifyScreen />} />
           <Route element={<PublicRouteWrapper />}>
             <Route path="/login" element={<LoginScreen />} />

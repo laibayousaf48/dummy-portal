@@ -71,7 +71,7 @@ getData();
 useEffect(() =>{
   const getGraph= async() =>{
     try{
-      const response = await fetch(`https://7b7xlap5jvkahyo5himfrzqy640qnadr.lambda-url.eu-west-1.on.aws/app/my-business/stats?business_id=${business_id}`);
+    const response = await fetch(`https://7b7xlap5jvkahyo5himfrzqy640qnadr.lambda-url.eu-west-1.on.aws/app/my-business/stats?business_id=${business_id}`);
     const data = await response.json();
     console.log("graph data", data);
     const {offers, audience} = data.data;

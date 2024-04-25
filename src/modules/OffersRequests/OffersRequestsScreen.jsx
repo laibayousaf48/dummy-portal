@@ -158,7 +158,7 @@ const handleSubmit = async(e) => {
     alert(`Please fill in the following fields: ${emptyFields.join(", ")}`);
     return;
   }
-  // debugger;
+  debugger;
   console.log("Imagesss",imageurls)
   const data = localStorage.getItem("User");
   const phone = JSON.parse(data);
@@ -182,18 +182,17 @@ const handleSubmit = async(e) => {
           { type: 'image', content: `${imageurls}` }
         ]
       })
-    
   })
     .then((res) => {
-      if (res.data?.status == 200) {
+      if (res.status == 200) {
         console.log("response", res);
-        toast.success("Your Post has been Published Successfully!")
+        toast.success('Your Post has been Published Successfully!');
       } else {
         throw new Error(
           res.data?.message ?? "Error in Publishing your Post"
         );
       }
-      toast.error("Error in Publishing Your Post")
+      toast.failure("Error in Publishing Your Post")
     })
     .catch((err) => {
       console.log(err);
@@ -201,17 +200,6 @@ const handleSubmit = async(e) => {
     .finally(() => {
       // setIsLoading(false);
     });
-// console.log("Response",res);
-  // console.log(
-  //   "data",
-  //   formFields.title,
-  //   formFields.message,
-  //   formFields.state,
-  //   formFields.location,
-  //   formFields.package,
-  //   formFields.duration,
-  //   selectedFiles
-  // );
 };
 
 // useEffect(() => {
@@ -244,7 +232,7 @@ useEffect(() => {
     try {
       const userData = localStorage.getItem("User");
       const user_id = JSON.parse(userData);
-      const u_id = user_id._id;
+      const u_id = user_id?._id;
       console.log("user is", user_id?._id)
       const response = await fetch(`https://crm-lara-mongo-7azts5zmra-uc.a.run.app/businessportal/offers?user_id=${u_id}`);
       const data = await response.json();
@@ -254,7 +242,6 @@ useEffect(() => {
       console.error("Error", error);
     }
   };
-
   fetchData();
 }, []);
 
