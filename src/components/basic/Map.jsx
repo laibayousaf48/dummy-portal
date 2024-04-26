@@ -112,7 +112,11 @@ function Map(props) {
         const response = await axios.get(`https://crm-lara-mongo-7azts5zmra-uc.a.run.app/businessportal/business-profile?business_id=${business_id}`);
         const { user } = response.data;
         const { location } = user;
-        setMarkerPosition({ lat: location?.coordinates[1], lng: location?.coordinates[0] });
+        let pos = {lat: 0, lng: 0}
+        if(location?.coordinates?.length == 2 && location?.coordinates?.findIndex(i => typeof i !== 'number') == -1) {
+          pos = { lat: location?.coordinates[1], lng: location?.coordinates[0] }
+        }
+        setMarkerPosition(pos);
         console.log("initial position", markerPosition);
         // const initialPosition = markerPosition;
         // if(initialPosition === null){
