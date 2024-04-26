@@ -5,10 +5,9 @@ import { Link, redirect, useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { AuthContext } from "../../contexts/AuthContext";
 // import axios from "axios";
-
+import { ProgressBar,DNA } from 'react-loader-spinner'
 
 function LoginScreen() {
-  
   const navigate = useNavigate();
   const authCtx = useContext(AuthContext);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -163,9 +162,32 @@ function LoginScreen() {
               </div> */}
 
               {/* <Link to={`/verify/${formFields.mobile}`}> */}
-                <button className="w-full h-[56px] bg-[#1FA3DB] text-[16px] rounded-md text-white hover:bg-[#8cd2f0]  mt-4">
-                  Sign in
+                <button className="w-full h-[56px] bg-[#1FA3DB] text-[16px] rounded-md text-white hover:bg-[#8cd2f0]  mt-4 justify-center">
+                  {isLoading ? (<ProgressBar
+                 visible={true}
+                 height="80"
+                 width="80"
+                 color="#4fa94d"
+                 ariaLabel="progress-bar-loading"
+                 wrapperStyle={{ transform: "translateX(230%)"}}
+                 wrapperClass=""
+                 />):("Sign in")}
                 </button>
+                
+                {/* <button className="w-full h-[56px] bg-[#1FA3DB] text-[16px] rounded-md text-white hover:bg-[#8cd2f0]  mt-4 justify-center">
+                  {isLoading ? (<DNA
+                    visible={true}
+                    height="80"
+                    width="80"
+                    ariaLabel="dna-loading"
+                    wrapperStyle={{ transform: "translateX(230%)", marginBottom: "4px"}}
+                    wrapperClass="dna-wrapper"
+                    />):("Sign in")}
+                </button> */}
+
+
+
+
               {/* </Link> */}
             </div>
           </form>

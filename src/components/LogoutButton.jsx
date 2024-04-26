@@ -10,6 +10,13 @@ function LogoutButton() {
 
   const handleLogout = () => {
     localStorage.removeItem('auth.token');
+    localStorage.removeItem('Response');
+    localStorage.removeItem('User');
+    localStorage.removeItem('userEmail');
+    localStorage.removeItem('Business ID');
+    localStorage.removeItem('registrationData');
+    localStorage.removeItem('OTP');
+    localStorage.removeItem('pin code');
      
     console.log("Logging out...");
     window.location.href = '/login';

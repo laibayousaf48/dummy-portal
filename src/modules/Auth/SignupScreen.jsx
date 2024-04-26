@@ -326,9 +326,12 @@ debugger;
                 />
               </div> */}
 
-              <div className="mt-[16px] flex items-center">
+              {/* <div className="mt-[16px] ">
+                <label htmlFor="phone_no" className="text-[14px] font-bold">Business Phone</label>
+                <div className="flex items-center">
                 <div className="flex-shrink-0 w-1/4">
                   <PhoneInput
+                  placeholder="Enter phone number"
                     international
                     countryCallingCodeEditable={false}
                     defaultCountry="RU"
@@ -351,7 +354,7 @@ debugger;
                       labelFontSize: "text-[27px]",
                       inputFontSize: "text-[22px]",
                     }}
-                    label="Business Phone"
+                    // label="Business Phone"
                     onChange={(e) => {
                       const inputValue = e.target.value;
                       const regex = /^[0-9]+$/;
@@ -369,7 +372,58 @@ debugger;
                     placeholder={"** *******"}
                   />
                 </div>
+                </div>               
+              </div> */}
+
+<div className="mt-[16px] ">
+                <label htmlFor="phone_no" className="text-[14px] font-bold">Business Phone</label>
+                <div className="flex items-center">
+                <div className="flex-shrink-0 w-1/4">
+                  <PhoneInput
+                  placeholder="Enter phone number"
+                    international
+                    countryCallingCodeEditable={false}
+                    defaultCountry="RU"
+                    value={value}
+                    onChange={setValue}
+                    className="styles"
+                    style={{
+                      // width: "50%",
+                      labelFontSize: "text-[20px]",
+                      inputFontSize: "text-[10px]",
+                      outline: "none",
+                    }}
+                  />
+                </div>
+                <div className="flex-grow ml-4">
+                  <TextInputField
+                    type={"number"}
+                    style={{
+                      width: "w-full",
+                      labelFontSize: "text-[27px]",
+                      inputFontSize: "text-[22px]",
+                    }}
+                    // label="Business Phone"
+                    onChange={(e) => {
+                      const inputValue = e.target.value;
+                      const regex = /^[0-9]+$/;
+                      if (inputValue === '' || (regex.test(inputValue) && inputValue.length <= 9)) {
+                     
+                        setFormFields((old) => ({
+                          ...old,
+                          business_phone: inputValue,
+                        }));
+                      }
+                    }}
+                    value={formFields.business_phone}
+                    error={formErrors.business_phone}
+                    isRequired={true}
+                    placeholder={"** *******"}
+                  />
+                </div>
+                </div>               
               </div>
+
               <div className="text-[16px] text-[#A9A9A9] text-center mt-[20px]">
                 Already have an account ?
                 <span

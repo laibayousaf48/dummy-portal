@@ -494,25 +494,79 @@ function ProfileSettingsScreen() {
   const [error, setError] = useState("");
   const business_id = localStorage.getItem("Business ID");
 console.log(business_id)
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       const response = await axios.get(`https://crm-lara-mongo-7azts5zmra-uc.a.run.app/businessportal/business-profile?business_id=${business_id}`);
+  //       const { user, business } = response.data;
+  //       const { email} = user;
+  //       const { phone: business_number, name: business_name, category, address, avatar_url, bank_details } = business;
+  //       setBusinessInfo({ business_name, business_number, email, address, category, avatar_url, bank_details });
+  //       console.log("bank details", bank_details);
+  //       const {account_holder_name, account_number, bank_code, branch_code } = bank_details;
+  //       setFormFields({ business_name, business_phone: business_number, email, address, category, account_holder_name, account_number, bank_code, branch_code });
+  //       console.log("response for get request",response)
+  //     } catch (error) {
+  //       console.error('API error:', error);
+  //     }
+  //   };
+
+  //   fetchData();
+  // }, [business_id]);
+
+
   useEffect(() => {
     const fetchData = async () => {
       try {
+        debugger;
         const response = await axios.get(`https://crm-lara-mongo-7azts5zmra-uc.a.run.app/businessportal/business-profile?business_id=${business_id}`);
         const { user, business } = response.data;
-        const { email} = user;
+        const { email } = user;
         const { phone: business_number, name: business_name, category, address, avatar_url, bank_details } = business;
+  
+        // Set business info
         setBusinessInfo({ business_name, business_number, email, address, category, avatar_url, bank_details });
-        console.log("bank details", bank_details);
-        const {account_holder_name, account_number, bank_code, branch_code } = bank_details;
-        setFormFields({ business_name, business_phone: business_number, email, address, category, account_holder_name, account_number, bank_code, branch_code });
-        console.log("response for get request",response)
+        console.log("total information", response)
+        if (bank_details) {
+          const { account_holder_name, account_number, bank_code, branch_code } = bank_details;
+          setFormFields({
+            business_name,
+            business_phone: business_number,
+            email,
+            address,
+            category,
+            account_holder_name: account_holder_name || "NA",
+            account_number: account_number || "NA",
+            bank_code: bank_code || "NA",
+            branch_code: branch_code || "NA"
+          });
+          console.log("Bank details set in formFields:", bank_details);
+        } else {
+          setFormFields({
+            business_name,
+            business_phone: business_number,
+            email,
+            address,
+            category,
+            account_holder_name: "",
+            account_number: "",
+            bank_code: "",
+            branch_code: ""
+          });
+          console.log("Bank details not available in response.");
+        }
+  
+        console.log("Response for GET request:", response);
       } catch (error) {
         console.error('API error:', error);
       }
     };
-
+  
     fetchData();
   }, [business_id]);
+  
+
+
 
   const handleIconClick = () => {
         const fileInput = document.createElement('input');

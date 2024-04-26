@@ -114,6 +114,10 @@ function Map(props) {
         const { location } = user;
         setMarkerPosition({ lat: location?.coordinates[1], lng: location?.coordinates[0] });
         console.log("initial position", markerPosition);
+        // const initialPosition = markerPosition;
+        // if(initialPosition === null){
+        //   setMarkerPosition({ lat: 0, lng: 0 });
+        // }
       } catch (error) {
         console.error('API error:', error);
       }

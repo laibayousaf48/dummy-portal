@@ -7,6 +7,38 @@
      -moz-appearance: none; 
      text-indent: 1px; 
      text-overflow: '';
-     /* background-color: red; */
+     /* background-color: yellowgreen; */
      outline: none;
 }
+select{
+    width: 30px;
+    margin-top: 0%;
+    padding-top: 0;
+    outline: none;
+    /* -webkit-appearance: none;
+     -moz-appearance: none; 
+     text-indent: 1px; 
+     text-overflow: ''; */
+     width: 50%
+}
+.PhoneInputInput{
+    outline: none;
+ width: 30px;
+display: none;
+}
+/* .PhoneInputCountry input{
+ border: none;  
+ width: 30px
+} */
+
+.PhoneInputCountrySelect{
+    float: right;
+    /* margin-right: 10px */
+}
+.PhoneInputCountry{
+    width: 100%;
+}
+.PhoneInputCountrySelect[aria-label="Country Code"]::after {
+    content: none !important;
+  }
+  
