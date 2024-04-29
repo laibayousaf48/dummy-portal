@@ -406,15 +406,16 @@ debugger;
                     // label="Business Phone"
                     onChange={(e) => {
                       const inputValue = e.target.value;
-                      const regex = /^[0-9]+$/;
-                      if (inputValue === '' || (regex.test(inputValue) && inputValue.length <= 9)) {
+                      // const regex = /^[0-9]+$/;
+                      // if (inputValue === '' || (regex.test(inputValue) && inputValue.length <= 9)) {
                      
                         setFormFields((old) => ({
                           ...old,
                           business_phone: inputValue,
                         }));
                       }
-                    }}
+                    }
+                  // }
                     value={formFields.business_phone}
                     error={formErrors.business_phone}
                     isRequired={true}

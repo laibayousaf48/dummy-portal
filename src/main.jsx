@@ -32,6 +32,7 @@ import BillingsScreen from './modules/Billing/BillingsScreen';
 import DemographicsScreen from './modules/Demographics/DemographicsScreen';
 import NotificationsScreen from './modules/Notifications/NotificationsScreen';
 import InvitationsScreen from './modules/Invitations/InvitationsScreen';
+import ProductsScreen from './modules/Products/ProductsScreen';
 import Form from './modules/Notifications/Form';
 import MessageVerifyScreen from './modules/Auth/MessageVerifyScreen.jsx';
 
@@ -64,6 +65,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
             <Route path="/notifications" element={<NotificationsScreen />} />
             <Route path="/form" element={<Form />} />
             <Route path="/invitations" element={<InvitationsScreen />} />
+            <Route path="/products" element={<ProductsScreen />} />
           </Route>
 
           <Route
