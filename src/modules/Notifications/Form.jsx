@@ -58,9 +58,7 @@ const Form = () => {
         content_type: formData.contentType,
         content_body: formData.contentBody
       });
-
       console.log(response.data)
-
       if (!response.data) {
         throw new Error('Failed to submit form data');
       }
@@ -95,7 +93,6 @@ const Form = () => {
       // Handle error, show error message, etc.
     }
   };
-
   return (
     <DashboardTemplate pageTitle={'Add New Notification'}>
     <div className="flex justify-center md:w-full sm:m-0 items-center bg-white">

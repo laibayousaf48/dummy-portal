@@ -306,7 +306,7 @@ const formatData = graphData?.audience.map((item) => item[1]);
           <tbody>
           <div className=" opacity-30 my-2"></div>
         {data.map((item, index) => (
-          <div className="flex flex-row my-[2px] w-full pl-12 pr-12 mb-4 border-b" key={index}>
+          <div className="flex flex-row my-[2px] w-full pl-12 pr-12 mb-4 py-4 border-b" key={index}>
             <div className="text-[14px] text-[#333333]  w-[50%]">
              {/* <img src={item.photo_urls} alt="Business" className="w-20 h-20 object-cover rounded-md" /> */}
             {item.photo_urls && item.photo_urls !== "NA" ?(

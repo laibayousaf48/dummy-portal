@@ -93,5 +93,12 @@ const SidebarItems = [
     activeIcon: <IoCalendarOutline color={"#24ACE3"} size={"24px"} />,
     route: "/invitations",
   },
+  {
+    id: 13,
+    title: "Products",
+    icon: <IoCalendarOutline color={"#AFAFAF"} size={"24px"} />,
+    activeIcon: <IoCalendarOutline color={"#24ACE3"} size={"24px"} />,
+    route: "/products",
+  },
 ];
 export default SidebarItems 

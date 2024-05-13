@@ -35,6 +35,7 @@ import InvitationsScreen from './modules/Invitations/InvitationsScreen';
 import ProductsScreen from './modules/Products/ProductsScreen';
 import Form from './modules/Notifications/Form';
 import MessageVerifyScreen from './modules/Auth/MessageVerifyScreen.jsx';
+import MapScreen from './modules/Map/MapScreen.jsx';
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
@@ -66,6 +67,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
             <Route path="/form" element={<Form />} />
             <Route path="/invitations" element={<InvitationsScreen />} />
             <Route path="/products" element={<ProductsScreen />} />
+            <Route path="/map" element={<MapScreen />} />
           </Route>
 
           <Route

@@ -17,7 +17,8 @@ function LogoutButton() {
     localStorage.removeItem('registrationData');
     localStorage.removeItem('OTP');
     localStorage.removeItem('pin code');
-     
+    localStorage.removeItem('phoneNo');
+    localStorage.removeItem('LoginData');  
     console.log("Logging out...");
     window.location.href = '/login';
 };

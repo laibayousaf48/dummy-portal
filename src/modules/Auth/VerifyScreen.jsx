@@ -5,11 +5,12 @@ import { useParams, useNavigate } from "react-router-dom";
 import axios from 'axios';
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer, toast } from 'react-toastify';
-
+import { RotatingLines } from 'react-loader-spinner'
 
 function VerifyScreen() {
   const navigate = useNavigate(); 
   let { number } = useParams();
+  const [isLoading, setIsLoading] = useState(false)
   // const [emailSent, setEmailSent] = useState(false); // State to track if email is sent
   // const [openSnackbar, setOpenSnackbar] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -124,49 +125,124 @@ useEffect(() => {
   generateOTP(); 
 }, []); 
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
- const userEmail = localStorage.getItem('userEmail');
+//   const handleSubmit = async (e) => {
+//     e.preventDefault();
+//  const userEmail = localStorage.getItem('userEmail');
 
-  console.log("handleSubmit clicked", userEmail)
-    // Check if the password is empty
-    const otp = localStorage.getItem("OTP");
-    if (formFields.password.toString().trim().length === 0) {
-      setFormErrors((old) => ({ ...old, password: "Password is required" }
+//   console.log("handleSubmit clicked", userEmail)
+//     // Check if the password is empty
+//     const otp = localStorage.getItem("OTP");
+//     if (formFields.password.toString().trim().length === 0) {
+//       setFormErrors((old) => ({ ...old, password: "Password is required" }
     
-    ));
-      return; 
-    }else if(otp === formFields.password){
-      console.log("Right Password")
-      const data = userEmail;
-      // debugger;
-      try {
-      const response = fetch('https://crm-lara-mongo-7azts5zmra-uc.a.run.app/businessportal/verify-email',{
+//     ));
+//       return; 
+//     }else if(otp === formFields.password){
+//       console.log("Right Password")
+//       const data = userEmail;
+//       debugger;
+//       setIsLoading(true)
+//       try {
+//       const response = fetch('https://crm-lara-mongo-7azts5zmra-uc.a.run.app/businessportal/verify-email',{
+//         method: 'POST',
+//         body: data,
+//       }).then(res => res.json());
+
+//         console.log('API response:', response.data);
+//         // toast.success("Verification Successful!");
+//         toast.success('Verification successful!');
+//         // navigate("/message/verify/:number")
+//         navigate("/");
+//         setIsLoading(false)
+//         setFormErrors({api: null });
+//         setError(null);
+//       } catch (error) {
+//         toast.failure("Error occured")
+//         console.error('API error:', error.response);
+//         setFormErrors((old) => ({ ...old, api: 'Failed to send password data.' }));
+//         setError('Failed to send password data.');
+//         setIsLoading(false)
+//       }
+//     }else{
+//       console.log("Enter Right OTP");
+//     }
+//   };
+
+
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  const userEmail = localStorage.getItem('userEmail');
+  const otp = localStorage.getItem("OTP");
+
+  if (formFields.password.toString().trim().length === 0) {
+    setFormErrors((old) => ({ ...old, password: "Password is required" }));
+    return; 
+  } else if (otp === formFields.password) {
+    console.log("Right Password");
+    setIsLoading(true)
+    try {
+      // First API call to verify email
+      const verifyEmailResponse = await fetch('https://crm-lara-mongo-7azts5zmra-uc.a.run.app/businessportal/verify-email', {
         method: 'POST',
-        body: data,
-      }).then(res => res.json());
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: userEmail
+      });
+      
+      const verifyEmailData = await verifyEmailResponse.json();
+      console.log('Verify Email API response:', verifyEmailData);
 
-        console.log('API response:', response.data);
-        // toast.success("Verification Successful!");
-        toast.success('Verification successful!');
-        // navigate('/');
-        navigate("/message/verify/:number")
-        // setTimeout(() => {
-        //   setOpenSnackbar(true); // Show Snackbar when email is sent
-        // }, 2000);
-
-        setFormErrors({api: null });
-        setError(null);
-      } catch (error) {
-        toast.failure("Error occured")
-        console.error('API error:', error.response);
-        setFormErrors((old) => ({ ...old, api: 'Failed to send password data.' }));
-        setError('Failed to send password data.');
+      if (verifyEmailData.message === "Email Verified Success") {
+        console.log("Email verification successful");
+const Regdata = localStorage.getItem("registrationData")
+const data = JSON.parse(Regdata)
+console.log("registrationdata", data.b_name)
+        const registerUserResponse = await fetch('https://crm-lara-mongo-7azts5zmra-uc.a.run.app/api/business-portal/register', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ 
+            business_name: data.b_name, 
+            // business_phone: data.b_phone,
+            password: data.password,
+            email: data.userEmail,
+          })
+        });
+        
+        const registerUserData = await registerUserResponse.json();
+        console.log('Register User API response:', registerUserData);
+        if(registerUserData.message === "Registration successful with unverified email"){
+          toast.success('Registration successful!');
+          navigate('/');
+       setIsLoading(false)
+        }
+      } else {
+        console.log("Email verification failed");
+        toast.failure('Email verification failed');
       }
-    }else{
-      console.log("Enter Right OTP");
+
+      // Reset form errors and error state
+      setFormErrors({ api: null });
+      setError(null);
+    } catch (error) {
+      // Handle API call errors
+      toast.failure("Error occurred");
+      console.error('API error:', error);
+       setIsLoading(false)
+      // Update form errors and error state
+      setFormErrors((old) => ({ ...old, api: 'Failed to register user.' }));
+      setError('Failed to register user.');
     }
-  };
+  } else {
+    console.log("Enter Right OTP");
+    toast.failure("Enter Right OTP");
+  }
+};
+
+
+
   return (
     <div>
       <div className="flex flex-row h-screen bg-white">
@@ -235,8 +311,22 @@ useEffect(() => {
               >
                 Verify
               </button> */}
+              <div className=" flex flex-row justify-center mt-4 text-gray-400" >
+                {isLoading && (
+                  <RotatingLines
+                    visible={true}
+                    height="50"
+                    width="50"
+                    color="grey"
+                    strokeWidth="5"
+                    animationDuration="0.75"
+                    ariaLabel="rotating-lines-loading"
+                    wrapperStyle={{ transform: "translateX(250%)" }}
+                    wrapperClass="flex flex-row justify-center"
+                  />
+                )}
               </div>
-            
+              </div>
             </div>
           </form>
         </div>

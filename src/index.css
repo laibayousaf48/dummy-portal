@@ -21,8 +21,11 @@ select{
      text-overflow: ''; */
      width: 50%
 }
+.PhoneInputCountryIconImg {
+width: 30%;
+}
 .PhoneInputInput{
-    outline: none;
+ outline: none;
  width: 30px;
 display: none;
 }
@@ -30,15 +33,47 @@ display: none;
  border: none;  
  width: 30px
 } */
-
+.PhoneInputCountryIcon{
+width: 50% !important;
+object-fit: contain !important;
+}
 .PhoneInputCountrySelect{
     float: right;
-    /* margin-right: 10px */
+    order: 2;
+    height: 20% !important; 
+    text-align: left;
+    margin-left: 0;
+    width: 80%;
 }
-.PhoneInputCountry{
-    width: 100%;
-}
+
 .PhoneInputCountrySelect[aria-label="Country Code"]::after {
     content: none !important;
   }
-  
+  .PhoneInput{
+    text-align: left;
+  }
+
+  .phoneInputContainer{
+    object-fit: cover;
+  }
+
+  @keyframes flicker {
+    0% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+  .circular-wheel {
+    width: 120px;
+    height: 120px;
+    border: 5px dashed #007bff; /* Blue color */
+    border-radius: 50%;
+    margin-top: 10px;
+    justify-content: center;
+  }
+    

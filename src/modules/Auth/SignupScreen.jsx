@@ -7,6 +7,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer, toast } from 'react-toastify';
 import countryList from 'react-select-country-list'
 import PhoneInput from 'react-phone-number-input'
+import { MdHeight } from "react-icons/md";
 
 function SignupScreen() {
   const navigate = useNavigate();
@@ -91,10 +92,10 @@ debugger;
       const password = formFields.password;
       const registrationData = {
         b_name,
-        b_phone,
+        // b_phone,
         password,
         userEmail,
-        c_code
+        // c_code
       };
       const registrationDataJson = JSON.stringify(registrationData);
       localStorage.setItem("registrationData", registrationDataJson);
@@ -114,7 +115,7 @@ debugger;
         password: null,
         cpassword: null,
         business_name: "",
-        business_phone: "",
+        // business_phone: "",
         api: null,
       });
       setError(null);
@@ -126,7 +127,7 @@ debugger;
   };
 
   return (
-    <div>
+    <div className="">
       <div className="flex flex-row h-screen bg-white">
         <div className="w-[50%] h-screen pt-5 ">
           <h1 className="text-center mt-9 mb-2 text-[45px] tracking-tight font-bold font-sans2 text-black">
@@ -194,31 +195,7 @@ debugger;
                   placeholder={"Type your Email"}
                 />
               </div>
-              {/* <div className="mt-[16px]">
-                <TextInputField
-                  type={"number"}
-                  style={{
-                    width: "w-full",
-                    labelFontSize: "text-[27px]",
-                    inputFontSize: "text-[22px]",
-                  }}
-                  label="Mobile Number"
-                  onChange={(e) => {
-                    // setFormErrors((old) => ({ ...old, email: null }));
-                    setFormFields((old) => ({
-                      ...old,
-                      mobile: e?.target?.value,
-                    }));
-                  }}
-                  value={formFields.mobile}
-                  error={formErrors.mobile}
-                  isRequired={true}
-                  placeholder={"03** *******"}
-                />
-              </div>
-              {formErrors.mobile && (
-                <p className="my-1 text-sm text-primary pl-4">{error}</p>
-              )} */}
+            
               <div className="mt-[16px]">
                 <TextInputField
                   type="password"
@@ -290,63 +267,30 @@ debugger;
                   placeholder={"Type your Business Name"}
                 />
               </div>
-              {/* <div className="mt-[16px]">
-              <PhoneInput
-                 placeholder="Enter phone number"
-                 value={value}
-                 onChange={setValue}
-                 style={{
-                  width: "w-1/4",
-                  labelFontSize: "text-[27px]",
-                  inputFontSize: "text-[22px]",
-                }}
-                 />
-                <TextInputField
-                  type={"number"}
-                  style={{
-                    width: "w-full",
-                    labelFontSize: "text-[27px]",
-                    inputFontSize: "text-[22px]",
-                  }}
-                  label="Business Phone"
-                  onChange={(e) => {
-                    const inputValue = e.target.value;
-                    const regex = /^[0-9]+$/;
-                    if (inputValue === '' || (regex.test(inputValue) && inputValue.length <= 11)) {
-                      setFormFields((old) => ({
-                        ...old,
-                        business_phone: inputValue,
-                      }));
-                    }
-                  }}
-                  value={formFields.business_phone}
-                  error={formErrors.business_phone}
-                  isRequired={true}
-                  placeholder={"03** *******"}
-                />
-              </div> */}
 
-              {/* <div className="mt-[16px] ">
+
+                {/* <div className="mt-[16px] ">
                 <label htmlFor="phone_no" className="text-[14px] font-bold">Business Phone</label>
-                <div className="flex items-center">
-                <div className="flex-shrink-0 w-1/4">
+                <div className="flex flex-col">
+                <div className="flex-shrink-0 phoneInputContainer">
                   <PhoneInput
                   placeholder="Enter phone number"
-                    international
+                    // international
                     countryCallingCodeEditable={false}
-                    defaultCountry="RU"
+                    defaultCountry=""
                     value={value}
                     onChange={setValue}
-                    className="styles"
+                    className="styles min-h-2"
                     style={{
-                      width: "25%",
+                      height: "10%",
                       labelFontSize: "text-[20px]",
                       inputFontSize: "text-[10px]",
                       outline: "none",
                     }}
+
                   />
                 </div>
-                <div className="flex-grow ml-4">
+                <div className="w-full">
                   <TextInputField
                     type={"number"}
                     style={{
@@ -354,18 +298,16 @@ debugger;
                       labelFontSize: "text-[27px]",
                       inputFontSize: "text-[22px]",
                     }}
-                    // label="Business Phone"
                     onChange={(e) => {
                       const inputValue = e.target.value;
-                      const regex = /^[0-9]+$/;
-                      if (inputValue === '' || (regex.test(inputValue) && inputValue.length <= 9)) {
+                     
                      
                         setFormFields((old) => ({
                           ...old,
                           business_phone: inputValue,
                         }));
                       }
-                    }}
+                    }
                     value={formFields.business_phone}
                     error={formErrors.business_phone}
                     isRequired={true}
@@ -374,56 +316,6 @@ debugger;
                 </div>
                 </div>               
               </div> */}
-
-<div className="mt-[16px] ">
-                <label htmlFor="phone_no" className="text-[14px] font-bold">Business Phone</label>
-                <div className="flex items-center">
-                <div className="flex-shrink-0 w-1/4">
-                  <PhoneInput
-                  placeholder="Enter phone number"
-                    international
-                    countryCallingCodeEditable={false}
-                    defaultCountry="RU"
-                    value={value}
-                    onChange={setValue}
-                    className="styles"
-                    style={{
-                      // width: "50%",
-                      labelFontSize: "text-[20px]",
-                      inputFontSize: "text-[10px]",
-                      outline: "none",
-                    }}
-                  />
-                </div>
-                <div className="flex-grow ml-4">
-                  <TextInputField
-                    type={"number"}
-                    style={{
-                      width: "w-full",
-                      labelFontSize: "text-[27px]",
-                      inputFontSize: "text-[22px]",
-                    }}
-                    // label="Business Phone"
-                    onChange={(e) => {
-                      const inputValue = e.target.value;
-                      // const regex = /^[0-9]+$/;
-                      // if (inputValue === '' || (regex.test(inputValue) && inputValue.length <= 9)) {
-                     
-                        setFormFields((old) => ({
-                          ...old,
-                          business_phone: inputValue,
-                        }));
-                      }
-                    }
-                  // }
-                    value={formFields.business_phone}
-                    error={formErrors.business_phone}
-                    isRequired={true}
-                    placeholder={"** *******"}
-                  />
-                </div>
-                </div>               
-              </div>
 
               <div className="text-[16px] text-[#A9A9A9] text-center mt-[20px]">
                 Already have an account ?
@@ -444,22 +336,24 @@ debugger;
             </div>
           </form>
         </div>
-        <div className="w-[50%] h-screen border-[1px] py-[5%] pl-[100px] border-gray-300 bg-[#1FA3DB] relative">
-          <div className="absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%]">
+        <div className="w-[50%] h-screen  border-[1px] py-[5%] pl-[100px] border-gray-300 bg-[#1FA3DB] relative">
+          <div className="absolute  top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%]">
             <img
               src={images[currentImageIndex]}
               alt={`Image ${currentImageIndex}`}
-              className="w-[298px] h-[506px]"
+              // className="w-[298px] h-[506px]"
+              className="w-[298px] h-[556px]"
             />
           </div>
         </div>
       </div>
-      {/* )}
-        </div> */}
-      {/* )} */}
       <ToastContainer />
     </div>
   );
 }
 
 export default SignupScreen;
+
+ // const regex = /^[0-9]+$/;
+                      // if (inputValue === '' || (regex.test(inputValue) && inputValue.length <= 9)) {
+                  // }

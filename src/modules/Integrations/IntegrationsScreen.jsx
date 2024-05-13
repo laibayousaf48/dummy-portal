@@ -20,7 +20,7 @@ function IntegrationsScreen() {
 
   return (
     <DashboardTemplate pageTitle={"Integration"}>
-      <div className="flex flex-col justify-center text-normal bg-white">
+      <div className="flex flex-col justify-center text-normal bg-white container py-12 px-24">
         <div className="flex justify-center text-3xl py-12">
           <label htmlFor="developerMode">Developer Mode&nbsp;&nbsp;</label>
           <input
@@ -50,8 +50,10 @@ function IntegrationsScreen() {
                 </div>
               </div>
             </div>
-            <div className="py-12 px-8">
+            <hr />
+            <div className="py-12 px-8 card box-shadow-1">
               <div className='text-3xl font-normal'>Link Views</div>
+              {/* <hr className='my-8'/> */}
               <Bar data={bar_data} />
             </div>
           </>

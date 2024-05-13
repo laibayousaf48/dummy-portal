@@ -1,7 +1,12 @@
 import {FaRegBell} from "react-icons/fa"
 import Sidebar from "../Sidebar.jsx";
 import BaseContextProvider from "../../contexts/BaseContext.jsx";
+import {useNavigate } from "react-router-dom";
 function DashboardTemplate({ children, pageTitle }) {
+  const navigate = useNavigate();
+ const handleClick = () =>{
+  navigate("/notifications")
+ }
   return (  
     <BaseContextProvider>
       <div className="flex">
@@ -13,7 +18,7 @@ function DashboardTemplate({ children, pageTitle }) {
                 <h1 className="font-bold text-xl">{pageTitle}</h1>
               </div>
               <div>
-                <div className="bg-slate-200 p-2 rounded-full">
+                <div className="bg-slate-200 p-2 rounded-full" onClick={handleClick}>
                   <FaRegBell />
                 </div>
               </div>
