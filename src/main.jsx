@@ -69,7 +69,6 @@ ReactDOM.createRoot(document.getElementById("root")).render(
             <Route path="/products" element={<ProductsScreen />} />
             <Route path="/map" element={<MapScreen />} />
           </Route>
-
           <Route
             path="*"
             element={
